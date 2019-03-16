@@ -14,7 +14,6 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
-            ViewBag.userNameSession = Session[Common.CommonConstants.USER_NAME];
             return View();
         }
         // users
@@ -30,14 +29,40 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult CreateUpdateUser(string strUser)
+        public JsonResult CreateEditUser(string strUser)
         {
             var dao = new UserDAO();
             JavaScriptSerializer serializer = new JavaScriptSerializer();
             User user = serializer.Deserialize<User>(strUser);
             user.Password = Common.Encryptor.MD5Hash(user.Password);
-            int result = dao.CreateUpdateUser(user, (string)Session[Common.CommonConstants.USER_NAME]);
+            int result = dao.CreateEditUser(user, (string)Session[Common.CommonConstants.USER_NAME]);
             return Json(new { messenge = result });
+        }
+        [HttpGet]
+        public JsonResult LoadUserDetail(int Id)
+        {
+            var dao = new UserDAO();
+            User user = dao.GetById(Id);
+            return Json(new {
+                data = user
+            },JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        public JsonResult DeleteUser(int Id)
+        {
+            var dao = new UserDAO();
+            bool result = dao.DeleteUser(Id);
+            return Json(new { status = result });
+        }
+        [HttpPost]
+        public JsonResult ChangeStatus(int Id)
+        {
+            var dao = new UserDAO();
+            bool? result = dao.ChangeStatus(Id);
+            return Json(new
+            {
+                result = result
+            });
         }
     }
 }

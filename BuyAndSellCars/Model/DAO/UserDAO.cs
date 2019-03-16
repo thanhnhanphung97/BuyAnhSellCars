@@ -18,15 +18,13 @@ namespace Model.DAO
         {
             return db.Users.OrderByDescending(x=>x.ID);
         }
-        //public long Insert(User entity)
-        //{
-        //    db.Users.Add(entity);
-        //    db.SaveChanges();
-        //    return entity.ID;
-        //}
-        public User GetById(string userName)
+        public User GetByUN(string userName)
         {
             return db.Users.SingleOrDefault(x => x.UserName == userName);
+        }
+        public User GetById(int Id)
+        {
+            return db.Users.SingleOrDefault(x => x.ID == Id);
         }
         public int Login(string userName,string password)
         {
@@ -36,7 +34,7 @@ namespace Model.DAO
             else if (result.Password == password) return 1;
             return -2;
         }
-        public int CreateUpdateUser(User entity,string userName)
+        public int CreateEditUser(User entity,string userName)
         {
             if (entity.ID == 0)
             {
@@ -79,6 +77,34 @@ namespace Model.DAO
             }
             else return 0;
         }
-
+        public bool DeleteUser(int Id)
+        {
+            User user = db.Users.Find(Id);
+            db.Users.Remove(user);
+            try
+            {
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return false;
+        }
+        public bool? ChangeStatus(int Id)
+        {
+            User user = db.Users.Find(Id);
+            user.Status = !user.Status;
+            try
+            {
+                db.SaveChanges();
+                return user.Status;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }

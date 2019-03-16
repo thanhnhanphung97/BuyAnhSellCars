@@ -26,7 +26,7 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
                 else if (result == -1) ModelState.AddModelError("", "Tài khoản đang bị khoá.");
                 else if (result == 1)
                 {
-                    var user = dao.GetById(model.UserName);
+                    var user = dao.GetByUN(model.UserName);
                     var userSession = new UserLogin();
                     userSession.UserName = user.UserName;
                     userSession.UserID = user.ID;

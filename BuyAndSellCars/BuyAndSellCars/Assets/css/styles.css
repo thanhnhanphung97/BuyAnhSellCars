@@ -121,7 +121,7 @@
 }
 
 .main-menu {
-    height: calc(100% - 50px);
+    height: calc(100% - 20px);
     overflow: hidden;
     padding: 20px 10px 0 0;
     -webkit-transition: all 0.3s ease 0s;
@@ -1802,6 +1802,12 @@ table.dbkit-table tr td {
     letter-spacing: 0;
 }
 
+.btn-status{
+    cursor:pointer;
+    padding: 3px 5px;
+    border: 0px;
+}
+
 .btn-add-location{
     margin: -10px -15px 0 0;
 }
@@ -1823,7 +1829,7 @@ table.dbkit-table tr td {
 }
 
 .btn-xs {
-    padding: 5px 10px;
+    padding: 3px 7px;
 }
 
 .nav-pills .nav-link {

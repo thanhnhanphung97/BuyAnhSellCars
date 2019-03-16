@@ -1,6 +1,6 @@
 ﻿var userconfig = {
     pageIndex: 1,
-    pageSize: 7
+    pageSize: 7,
 }
 
 var userController = {
@@ -10,19 +10,37 @@ var userController = {
         userController.setFormatToastr();
     },
     registerEvent: function () {
-        $('#btnAddUser').off('click').on('click', function () {
+        $('#btnCreateUser').off('click').on('click', function () {
             userController.resetForm();
-            $('#title-user').html = "Thêm Mới Người Dùng";
-            $('#addUpdateUserModel').modal('show');
+            $("#userName").prop('disabled', false);
+            $('#title-user').html("Thêm Mới Người Dùng");
+            $('#createEditUserModal').modal('show');
         }),
-        $('#createUpdateUser').off('click').on('click', function (e) {
+        $('#createEditUser').off('click').on('click', function () {
             if($('#mail').val() != "" && $('#userName').val() != "" && $('#name').val() != "" && $('#phone').val() != "" && $('#address').val() != "")
-                userController.createUpdateUser();
+                userController.createEditUser();
             else {
                 toastr.options.positionClass = 'toast-top-right';
                 toastr.warning("Vui lòng nhập đầy đủ thông tin", "Warning");
                 toastr.options.positionClass = 'toast-bottom-right';
             }
+        }),
+        $('.btn-edit').off('click').on('click', function () {
+            $('#title-user').html("Chỉnh Sửa Thông Tin Người Dùng");
+            $("#userName").prop('disabled', true);
+            var id = $(this).data('id');
+            userController.loadUserDetail(id);
+            $('#createEditUserModal').modal('show');
+        }),
+        $('.btn-delete').off('click').on('click', function () {
+            var id = $(this).data('id');
+            if (confirm("Bạn có muốn xoá bản ghi này?"))
+                userController.deleteUser($(this).data('id'));
+        }),
+        $('.btn-status').off('click').on('click', function () {
+            var Id = $(this).data('id');
+            userController.changeStatus(Id);
+            setTimeout(userController.loadUser(), 200);
         })
     },
     loadUser: function () {
@@ -45,14 +63,12 @@ var userController = {
                         Name: item.Name,
                         Phone: item.Phone,
                         Email: item.Email,
-                        Status: item.Status == true ? "<div id='" + item.ID + "'><i class='fa fa-check-square-o' aria-hidden='true'></i></div>" : "<div id='" + item.ID + "'><i class='fa fa-square-o' aria-hidden='true'></i></div>"
-                        //Edit: "<i class='fa fa-pencil' aria-hidden='true'></i>",
-                        //Delete: "<i class='fa fa-times' aria-hidden='true' style='color:red;'></i>"
+                        Status: item.Status == true ? "<i class='fa fa-check-square-o' aria-hidden='true'></i>" : "<i class='fa fa-square-o' aria-hidden='true'></i>"
                     });
                 });
                 $('#tblUser').html(html);
                 userController.pagingUser(response.totalRowUser, function () {
-                    userController.loadUser();
+                    userController.loadUser(userconfig.pageIndex, userconfig.pageSize);
                 })
                 userController.registerEvent();
             }
@@ -74,11 +90,11 @@ var userController = {
             },
         });
     },
-    createUpdateUser: function () {
+    createEditUser: function () {
         var id = parseInt($('#hidID').val());
         var userName = $('#userName').val();
         var name = $('#name').val();
-        var phone = parseInt($('#phone').val());
+        var phone = $('#phone').val();
         var address = $('#address').val();
         var mail = $('#mail').val();
         var user = {
@@ -91,22 +107,74 @@ var userController = {
             Email: mail
         }
         $.ajax({
-            url: '/HomeAdmin/CreateUpdateUser',
+            url: '/HomeAdmin/CreateEditUser',
             data: {
                 strUser : JSON.stringify(user)
             },
             type: 'POST',
             dataType: 'json',
             success: function (response) {
-                if (response.messenge == 1) toastr.success("Thêm thành công!", "Success");
+                if (response.messenge == 1) toastr.success("Thêm user thành công!", "Success");
                 else if (response.messenge == 2) toastr.success("Sửa thông tin thành công!", "Success");
                 else toastr.error("Thêm user không thành công!", "Fail");
-                $('#addUpdateUserModel').modal('hide');
+                $('#createEditUserModal').modal('hide');
                 userController.loadUser();
             },
             error: function () {
                 toastr.error("Thêm user không thành công!", "Error");
-                $('#addUpdateUserModel').modal('hide');
+                $('#createEditUserModal').modal('hide');
+            }
+        })
+    },
+    loadUserDetail: function(id){
+        $.ajax({
+            url: '/HomeAdmin/LoadUserDetail',
+            data: {
+                Id: id
+            },
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                var data = response.data;
+                $('#hidID').val(data.ID);
+                $('#userName').val(data.UserName);
+                $('#name').val(data.Name);
+                $('#phone').val(data.Phone);
+                $('#address').val(data.Address);
+                $('#mail').val(data.Email);
+            }
+        })
+    },
+    deleteUser: function(id){
+        $.ajax({
+            url: '/HomeAdmin/DeleteUser',
+            data:{
+                Id: id
+            },
+            dataType: 'json',
+            type: 'POST',
+            success: function(response){
+                if (response.status == true) 
+                {
+                    toastr.success("Xoá bản ghi thành công!", "Success");
+                    userController.loadUser(userconfig.pageIndex,userconfig.pageSize);
+                }
+                else toastr.error("Xoá bản ghi thất bại!", "Fail");
+            }
+        })
+    },
+    changeStatus: function(id){
+        $.ajax({
+            url: 'HomeAdmin/ChangeStatus',
+            data: {
+                Id: id
+            },
+            type: 'POST',
+            dataType: 'json',
+            success: function (response) {
+                var res = response.result;
+                var html = res == true ? "<i class='fa fa-check-square-o' aria-hidden='true'></i>" : "<i class='fa fa-square-o' aria-hidden='true'></i>";
+                $.data(id).html(html);
             }
         })
     },
