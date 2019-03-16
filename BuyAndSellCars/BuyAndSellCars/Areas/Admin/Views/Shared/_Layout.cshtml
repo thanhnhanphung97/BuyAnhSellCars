@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="/Assets/css/default-css.css">
     <link rel="stylesheet" href="/Assets/css/styles.css">
     <link rel="stylesheet" href="/Assets/css/responsive.css">
+    <link href="/content/toastr.min.css" rel="stylesheet" />
     <!-- modernizr css -->
     <script src="/Assets/js/vendor/modernizr-2.8.3.min.js"></script>
     <style>
@@ -221,16 +222,8 @@
             </div>
             <!-- page title area end -->
             @RenderBody()
-            @RenderSection("header", true)
         </div>
         <!-- main content area end -->
-        <!-- footer area start-->
-        <footer>
-            <div class="footer-area">
-                <p>© Copyright 2018. All right reserved. Template by <a href="https://colorlib.com/wp/">Colorlib</a>.</p>
-            </div>
-        </footer>
-        <!-- footer area end-->
     </div>
     <!-- page container area end -->
 
@@ -267,7 +260,10 @@
     <script src="https://cdn.datatables.net/1.10.18/js/dataTables.bootstrap4.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.3/js/responsive.bootstrap.min.js"></script>
-    @RenderSection("scripts", false);
+    <!--Toastr-->
+    <script src="/Scripts/toastr.min.js"></script>
+    <!--End-->
+    @RenderSection("scripts", false)
 </body>
 
 </html>

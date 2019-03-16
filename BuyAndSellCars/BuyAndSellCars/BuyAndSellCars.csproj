@@ -247,6 +247,8 @@
     <Content Include="Assets\js\scripts.js" />
     <Content Include="Assets\js\vendor\jquery-2.2.4.min.js" />
     <Content Include="Assets\js\vendor\modernizr-2.8.3.min.js" />
+    <Content Include="content\toastr.css" />
+    <Content Include="content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -266,6 +268,8 @@
     <Content Include="Assets\fonts\themify.woff" />
     <Content Include="Assets\images\icon\market-value\Thumbs.db" />
     <Content Include="Assets\images\icon\Thumbs.db" />
+    <Content Include="content\toastr.scss" />
+    <Content Include="content\toastr.less" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -277,6 +281,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
