@@ -11,94 +11,93 @@
     <script src="/Scripts/jquery.validate.min.js"></script>
 }
 
-<div class="main-content-inner">
-    <div class="row">
-        @* danh sách dữ liệu người dùng *@
-        <div class="col-12 mt-5">
-            <div class="card">
-                <div class="card-body">
-                    <div class="col-md-12 clearfix">
-                        <h4 class="header-title pull-left">Danh Sách Người Dùng</h4>
-                        <input type="button" class="btn btn-light btn-add-location pull-right" id="btnAddUser" value="Thêm Mới" @*data-toggle="modal" data-target="#addUpdateUser"*@ />
-                    </div>
-                    <div class="single-table">
-                        <div class="table-responsive">
-                            <table class="table table-hover progress-table text-center">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Tên Tài Khoản</th>
-                                        <th scope="col">Tên Người Dùng</th>
-                                        <th scope="col">Số Điện Thoại</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Trạng Thái</th>
-                                        <th scope="col"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></th>
-                                        <th scope="col"><i class="fa fa-trash-o" aria-hidden="true"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tblUser"></tbody>
-                            </table>
-                            <div class="pull-right" style="margin-top: 30px;">
-                                <ul id="pagination-user" class="pagination-md"></ul>
-                            </div>
-                            <script id="user-data" type="x-tmpl-mustache">
+<div class="row">
+    @* danh sách dữ liệu người dùng *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Người Dùng</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateUser" value="Thêm Mới" @*data-toggle="modal" data-target="#addUpdateUser"*@ />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
                                 <tr>
-                                    <td>{{ID}}</td>
-                                    <td>{{UserName}}</td>
-                                    <td>{{Name}}</td>
-                                    <td>{{Phone}}</td>
-                                    <td>{{Email}}</td>
-                                    <td>{{{Status}}}</td>
-                                    <td>{{{Edit}}}</td>
-                                    <td>{{{Delete}}}</td>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên Tài Khoản</th>
+                                    <th scope="col">Tên Người Dùng</th>
+                                    <th scope="col">Số Điện Thoại</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">#</th>
                                 </tr>
-                            </script>
+                            </thead>
+                            <tbody id="tblUser"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-user" class="pagination-md"></ul>
                         </div>
+                        <script id="user-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{UserName}}</td>
+                                <td>{{Name}}</td>
+                                <td>{{Phone}}</td>
+                                <td>{{Email}}</td>
+                                <td><div data-id="{{ID}}" class="btn btn-status">{{{Status}}}</div></td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        @* Modal add - update user *@
-        <div class="modal fade" id="addUpdateUserModel">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="title-user">Thêm Mới Người Dùng</h5>
-                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-user">
-                            <div class="form-group">
-                                <label for="userName"><strong>Tên Tài Khoản</strong></label>
-                                <input type="text" class="form-control" id="userName" aria-describedby="passwordDefault" placeholder="user001" required />
-                                <small id="passwordDefault" class="form-text text-muted">
-                                    Mật khẩu mặc định là 123.
-                                </small>
-                                <input type="hidden" id="hidID" value="0" />
-                            </div>
-                            <div class="form-group">
-                                <label for="name"><strong>Tên Người Dùng</strong></label>
-                                <input type="text" class="form-control" id="name" placeholder="Nguyễn Văn A" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="phone"><strong>Số Điện Thoại</strong></label>
-                                <input type="number" class="form-control" id="phone" placeholder="0926112017" required />
-                            </div>
-                            <div class="form-group">
-                                <label for="address"><strong>Địa Chỉ</strong></label>
-                                <textarea class="form-control" id="address" placeholder="176/5 DT745 Street" required></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="mail"><strong>Email</strong></label>
-                                <input type="email" class="form-control" id="mail" placeholder="abc@gmail.com" required />
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" id="createUpdateUser">Save changes</button>
-                    </div>
+    @* Modal add - update user *@
+    <div class="modal fade" id="createEditUserModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-user">Thêm Mới Người Dùng</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-user">
+                        <div class="form-group">
+                            <label for="userName"><strong>Tên Tài Khoản</strong></label>
+                            <input type="text" class="form-control" id="userName" aria-describedby="passwordDefault" placeholder="user001" required />
+                            <small id="passwordDefault" class="form-text text-muted">
+                                Mật khẩu mặc định là 123.
+                            </small>
+                            <input type="hidden" id="hidID" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name"><strong>Tên Người Dùng</strong></label>
+                            <input type="text" class="form-control" id="name" placeholder="Nguyễn Văn A" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone"><strong>Số Điện Thoại</strong></label>
+                            <input type="number" class="form-control" id="phone" placeholder="0926112017" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="address"><strong>Địa Chỉ</strong></label>
+                            <textarea class="form-control" id="address" placeholder="176/5 DT745 Street" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mail"><strong>Email</strong></label>
+                            <input type="email" class="form-control" id="mail" placeholder="abc@gmail.com" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="createEditUser">Save changes</button>
                 </div>
             </div>
         </div>
