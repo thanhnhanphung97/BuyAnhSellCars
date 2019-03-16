@@ -31,6 +31,7 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
                     userSession.UserName = user.UserName;
                     userSession.UserID = user.ID;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
+                    Session.Add(CommonConstants.USER_NAME, model.UserName);
                     return RedirectToAction("Index", "HomeAdmin");
                 }
                 else ModelState.AddModelError("", "Thông tin đăng nhập không chính xác.");
