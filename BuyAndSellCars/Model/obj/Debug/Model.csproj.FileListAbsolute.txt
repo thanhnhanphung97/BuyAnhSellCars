@@ -1,0 +1,10 @@
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\Model.dll.config
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\Model.dll
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\Model.pdb
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\EntityFramework.dll
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\EntityFramework.xml
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\obj\Debug\Model.dll
+D:\Study\Code\Visual\Project\BuyAndSellCars\Model\obj\Debug\Model.pdb
