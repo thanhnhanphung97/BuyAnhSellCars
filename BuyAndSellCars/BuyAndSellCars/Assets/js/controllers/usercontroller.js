@@ -25,19 +25,20 @@ var userController = {
                 toastr.options.positionClass = 'toast-bottom-right';
             }
         }),
-        $('.btn-edit').off('click').on('click', function () {
+        $('.btn-edit-user').off('click').on('click', function () {
             $('#title-user').html("Chỉnh Sửa Thông Tin Người Dùng");
             $("#userName").prop('disabled', true);
+            $('#passwordDefault').prop('hidden', true);
             var id = $(this).data('id');
             userController.loadUserDetail(id);
             $('#createEditUserModal').modal('show');
         }),
-        $('.btn-delete').off('click').on('click', function () {
+        $('.btn-delete-user').off('click').on('click', function () {
             var id = $(this).data('id');
             if (confirm("Bạn có muốn xoá bản ghi này?"))
                 userController.deleteUser($(this).data('id'));
         }),
-        $('.btn-status').off('click').on('click', function () {
+        $('.btn-status-user').off('click').on('click', function () {
             var Id = $(this).data('id');
             userController.changeStatus(Id);
             setTimeout(userController.loadUser(), 200);

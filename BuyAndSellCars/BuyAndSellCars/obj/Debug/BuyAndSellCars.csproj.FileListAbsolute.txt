@@ -140,3 +140,5 @@ D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\BuyAndSellCars\bin\Microsoft.Owin.Sec
 D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\BuyAndSellCars\obj\Debug\BuyAndSellCars.csprojResolveAssemblyReference.cache
 D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\BuyAndSellCars\obj\Debug\BuyAndSellCars.dll
 D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\BuyAndSellCars\obj\Debug\BuyAndSellCars.pdb
+D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\BuyAndSellCars\bin\CKFinder.dll
+D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\BuyAndSellCars\bin\CKFinder.pdb
