@@ -4,13 +4,17 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section scripts{
-
     <script src="/Assets/js/plugins/mustache.min.js"></script>
     <script src="/Assets/js/plugins/jquery.twbsPagination.min.js"></script>
     <script src="/Assets/js/controllers/userController.js"></script>
-    <script src="/Scripts/jquery.validate.min.js"></script>
+    <script src="/Assets/js/controllers/newsCategoryController.js"></script>
+    <script src="/Assets/js/controllers/contentController.js"></script>
+    <script>
+
+    </script>
 }
 
+@* Users *@
 <div class="row">
     @* danh sách dữ liệu người dùng *@
     <div class="col-12 mt-5">
@@ -18,7 +22,7 @@
             <div class="card-body">
                 <div class="col-md-12 clearfix">
                     <h4 class="header-title pull-left">Danh Sách Người Dùng</h4>
-                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateUser" value="Thêm Mới" @*data-toggle="modal" data-target="#addUpdateUser"*@ />
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateUser" value="Thêm Mới" />
                 </div>
                 <div class="single-table">
                     <div class="table-responsive">
@@ -46,10 +50,10 @@
                                 <td>{{Name}}</td>
                                 <td>{{Phone}}</td>
                                 <td>{{Email}}</td>
-                                <td><div data-id="{{ID}}" class="btn btn-status">{{{Status}}}</div></td>
+                                <td><div data-id="{{ID}}" class="btn btn-status btn-status-user">{{{Status}}}</div></td>
                                 <td>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit"><i class="fa fa-edit"></i> Sửa</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete"><i class="ti-trash"></i> Xoá</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-user"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-user"><i class="ti-trash"></i> Xoá</div>
                                 </td>
                             </tr>
                         </script>
@@ -68,7 +72,7 @@
                     <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form-user">
+                    <form>
                         <div class="form-group">
                             <label for="userName"><strong>Tên Tài Khoản</strong></label>
                             <input type="text" class="form-control" id="userName" aria-describedby="passwordDefault" placeholder="user001" required />
@@ -104,3 +108,89 @@
     </div>
 </div>
 
+@* News - Content *@
+<div class="row">
+    @* danh sách tin tức *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Tin Tức</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateContent" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên</th>
+                                    <th scope="col">Người Đăng</th>
+                                    <th scope="col">Danh Mục</th>
+                                    <th scope="col">Tổng Lượt Xem</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblContent"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-content" class="pagination-md"></ul>
+                        </div>
+                        <script id="content-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Name}}</td>
+                                <td>{{CreatedBy}}</td>
+                                <td>{{CategoryName}}</td>
+                                <td>{{ViewCount}}</td>
+                                <td><div data-id="{{ID}}" class="btn btn-status btn-status-content">{{{Status}}}</div></td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content"><i class="ti-eye"></i> Xem</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-content"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-content"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Add - Update - Content - News *@
+    <div class="modal fade bd-example-modal-lg" id="createEditContentModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-content">Thêm Mới Tin Tức</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group clearfix">
+                            <label class="label-location pull-left" for="name"><strong>Tiêu Đề</strong></label>
+                            <input type="text" class="form-control-sm support-input" id="name" placeholder="" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone"><strong>Số Điện Thoại</strong></label>
+                            <input type="number" class="form-control" id="phone" placeholder="0926112017" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="address"><strong>Địa Chỉ</strong></label>
+                            <textarea class="form-control" id="address" placeholder="176/5 DT745 Street" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="mail"><strong>Email</strong></label>
+                            <input type="email" class="form-control" id="mail" placeholder="abc@gmail.com" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="createEditUser">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using Model.DAO;
 using Model.EF;
@@ -23,7 +20,8 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             var dao = new UserDAO();
             var listUser = dao.GetListUser().Skip((page - 1) * pageSize).Take(pageSize);
             int totalRow = dao.GetListUser().Count();
-            return Json(new {
+            return Json(new
+            {
                 data = listUser,
                 totalRowUser = totalRow
             }, JsonRequestBehavior.AllowGet);

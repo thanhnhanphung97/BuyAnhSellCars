@@ -16,7 +16,7 @@ namespace Model.EF
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<CarCategory> CarCategories { get; set; }
         public virtual DbSet<CarPart> CarParts { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<NewsCategory> NewsCategories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
         public virtual DbSet<ContentTag> ContentTags { get; set; }
@@ -103,19 +103,19 @@ namespace Model.EF
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
 
-            modelBuilder.Entity<Category>()
+            modelBuilder.Entity<NewsCategory>()
                 .Property(e => e.MetaTitle)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Category>()
+            modelBuilder.Entity<NewsCategory>()
                 .Property(e => e.CreatedBy)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Category>()
+            modelBuilder.Entity<NewsCategory>()
                 .Property(e => e.ModifiedBy)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Category>()
+            modelBuilder.Entity<NewsCategory>()
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
 
