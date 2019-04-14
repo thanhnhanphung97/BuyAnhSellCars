@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Model.DAO;
+using Model.EF;
 
 namespace BuyAndSellCars.Areas.Admin.Controllers
 {
@@ -61,5 +63,33 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
         //        result = result
         //    });
         //}
+        [HttpGet]
+        public JsonResult GetListNewsName()
+        {
+            var dao = new NewsCategoryDAO();
+            var data = dao.GetListNewsCategory();
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetListMainMenu()
+        {
+            var dao = new NewsCategoryDAO();
+            var mainMenu = dao.GetListMainMenu();
+            return Json(new { data = mainMenu },JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult GetDisplayOrder(int parentId, int display, string cal)
+        {
+            var dao = new NewsCategoryDAO();
+            int rel = dao.GetDisplayOrder(parentId, display, cal);
+            return Json(new { rel = rel }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public JsonResult LoadNewsCategory()
+        {
+            var dao = new NewsCategoryDAO();
+            var data = dao.LoadNewsCategory();
+            return Json(new { data = data }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

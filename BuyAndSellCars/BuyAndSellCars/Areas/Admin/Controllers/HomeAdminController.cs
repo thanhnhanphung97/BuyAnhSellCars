@@ -15,7 +15,7 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
         }
         // users
         [HttpGet]
-        public JsonResult LoadUserData(int page, int pageSize = 7)
+        public JsonResult LoadUserData(int page, int pageSize = 10)
         {
             var dao = new UserDAO();
             var listUser = dao.GetListUser().Skip((page - 1) * pageSize).Take(pageSize);
@@ -53,13 +53,13 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             return Json(new { status = result });
         }
         [HttpPost]
-        public JsonResult ChangeStatus(int Id)
+        public JsonResult ChangeStatus(long Id)
         {
             var dao = new UserDAO();
             bool? result = dao.ChangeStatus(Id);
             return Json(new
             {
-                result = result
+                res = result
             });
         }
     }

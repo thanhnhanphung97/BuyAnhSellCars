@@ -1,27 +1,36 @@
 ﻿var userconfig = {
     pageIndex: 1,
-    pageSize: 7,
+    pageSize: 10,
 }
 
 var userController = {
     init: function () {
         userController.loadUser();
-        userController.registerEvent();
         userController.setFormatToastr();
+        userController.registerEvent();
     },
     registerEvent: function () {
         $('#btnCreateUser').off('click').on('click', function () {
             userController.resetForm();
             $("#userName").prop('disabled', false);
+            $('#passwordDefault').prop('hidden', false);
             $('#title-user').html("Thêm Mới Người Dùng");
+            $('#createEditUser').html("Thêm");
             $('#createEditUserModal').modal('show');
         }),
         $('#createEditUser').off('click').on('click', function () {
-            if($('#mail').val() != "" && $('#userName').val() != "" && $('#name').val() != "" && $('#phone').val() != "" && $('#address').val() != "")
-                userController.createEditUser();
+            if ($('#mail').val() != "" && $('#userName').val() != "" && $('#name').val() != "" && $('#phone').val() != "" && $('#address').val() != "") {
+                if (userController.validateEmail($('#mail').val()))
+                    userController.createEditUser();
+                else {
+                    toastr.options.positionClass = 'toast-top-right';
+                    toastr.warning("Email không đúng định dạng!", "Warning");
+                    toastr.options.positionClass = 'toast-bottom-right';
+                }
+            }
             else {
                 toastr.options.positionClass = 'toast-top-right';
-                toastr.warning("Vui lòng nhập đầy đủ thông tin", "Warning");
+                toastr.warning("Vui lòng nhập đầy đủ thông tin!", "Warning");
                 toastr.options.positionClass = 'toast-bottom-right';
             }
         }),
@@ -29,6 +38,7 @@ var userController = {
             $('#title-user').html("Chỉnh Sửa Thông Tin Người Dùng");
             $("#userName").prop('disabled', true);
             $('#passwordDefault').prop('hidden', true);
+            $('#createEditUser').html("Lưu Thay Đổi");
             var id = $(this).data('id');
             userController.loadUserDetail(id);
             $('#createEditUserModal').modal('show');
@@ -39,9 +49,9 @@ var userController = {
                 userController.deleteUser($(this).data('id'));
         }),
         $('.btn-status-user').off('click').on('click', function () {
+            var btn = $(this);
             var Id = $(this).data('id');
-            userController.changeStatus(Id);
-            setTimeout(userController.loadUser(), 200);
+            userController.changeStatus(Id,btn);
         })
     },
     loadUser: function () {
@@ -58,14 +68,16 @@ var userController = {
                 var html = "";
                 var userData = $('#user-data').html();
                 $.each(data, function (i, item) {
-                    html += Mustache.render(userData, {
-                        ID: item.ID,
-                        UserName: item.UserName,
-                        Name: item.Name,
-                        Phone: item.Phone,
-                        Email: item.Email,
-                        Status: item.Status == true ? "<i class='fa fa-check-square-o' aria-hidden='true'></i>" : "<i class='fa fa-square-o' aria-hidden='true'></i>"
-                    });
+                    if (item.UserName != "admin") {
+                        html += Mustache.render(userData, {
+                            ID: item.ID,
+                            UserName: item.UserName,
+                            Name: item.Name,
+                            Phone: item.Phone,
+                            Email: item.Email,
+                            Status: item.Status == true ? "<div class='btn btn-rounded btn-success btn-table'><i class='fa fa-unlock-alt' aria-hidden='true'> Kích hoạt</i></div>" : "<div class='btn btn-rounded btn-secondary btn-table'><i class='fa fa-lock' aria-hidden='true'> Khoá</i></div>"
+                        });
+                    } 
                 });
                 $('#tblUser').html(html);
                 userController.pagingUser(response.totalRowUser, function () {
@@ -77,10 +89,9 @@ var userController = {
     },
     pagingUser: function (totalRow, callback) {
         var totalPage = Math.ceil(totalRow / userconfig.pageSize);
-        totalPage = totalPage > 5 ? 5 : totalPage;
         $('#pagination-user').twbsPagination({
             totalPages: totalPage,
-            visiblePages: totalPage,
+            visiblePages: 5,
             first: "Đầu",
             prev: "Trước",
             next: "Tiếp",
@@ -164,18 +175,17 @@ var userController = {
             }
         })
     },
-    changeStatus: function(id){
+    changeStatus: function(id,btn){
         $.ajax({
-            url: 'HomeAdmin/ChangeStatus',
+            url: '/HomeAdmin/ChangeStatus',
             data: {
                 Id: id
             },
-            type: 'POST',
             dataType: 'json',
+            type: 'POST',
             success: function (response) {
-                var res = response.result;
-                var html = res == true ? "<i class='fa fa-check-square-o' aria-hidden='true'></i>" : "<i class='fa fa-square-o' aria-hidden='true'></i>";
-                $.data(id).html(html);
+                var html = response.res == true ? "<div class='btn btn-rounded btn-success btn-table'><i class='fa fa-unlock-alt' aria-hidden='true'> Kích hoạt</i></div>" : "<div class='btn btn-rounded btn-secondary btn-table'><i class='fa fa-lock' aria-hidden='true'> Khoá</i></div>";
+                btn.html(html);
             }
         })
     },
@@ -205,6 +215,10 @@ var userController = {
         $('#phone').val('');
         $('#address').val('');
         $('#mail').val('');
+    },
+    validateEmail: function (email) {
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
     }
 };
 userController.init();

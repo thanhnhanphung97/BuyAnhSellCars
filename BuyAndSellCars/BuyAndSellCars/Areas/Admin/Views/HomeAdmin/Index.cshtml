@@ -4,18 +4,30 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section scripts{
+    <script src="/Assets/js/plugins/ckeditor/adapters/jquery.js"></script>
     <script src="/Assets/js/plugins/mustache.min.js"></script>
     <script src="/Assets/js/plugins/jquery.twbsPagination.min.js"></script>
-    <script src="/Assets/js/controllers/userController.js"></script>
-    <script src="/Assets/js/controllers/newsCategoryController.js"></script>
     <script src="/Assets/js/controllers/contentController.js"></script>
+    <script src="/Assets/js/controllers/newsCategoryController.js"></script>
+    <script src="/Assets/js/controllers/userController.js"></script>
     <script>
-
+        var editor = CKEDITOR.replace('detailContent', {
+            customConfig: '/Assets/js/plugins/ckeditor/config.js',
+            htmlEncodeOutput: true
+        });
+        $('#btnSelecedImgNews').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#imageContent').val(url);
+            };
+            finder.popup();
+        });
     </script>
 }
 
 @* Users *@
-<div class="row">
+<div class="row table-area" hidden>
     @* danh sách dữ liệu người dùng *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -50,10 +62,10 @@
                                 <td>{{Name}}</td>
                                 <td>{{Phone}}</td>
                                 <td>{{Email}}</td>
-                                <td><div data-id="{{ID}}" class="btn btn-status btn-status-user">{{{Status}}}</div></td>
+                                <td><div data-id="{{ID}}" class="btn-status-user">{{{Status}}}</div></td>
                                 <td>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-user"><i class="fa fa-edit"></i> Sửa</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-user"><i class="ti-trash"></i> Xoá</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-user btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-user btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
                             </tr>
                         </script>
@@ -100,8 +112,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="createEditUser">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditUser">Lưu Thay Đổi</button>
                 </div>
             </div>
         </div>
@@ -109,7 +121,7 @@
 </div>
 
 @* News - Content *@
-<div class="row">
+<div class="row table-area" hidden>
     @* danh sách tin tức *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -144,11 +156,11 @@
                                 <td>{{CreatedBy}}</td>
                                 <td>{{CategoryName}}</td>
                                 <td>{{ViewCount}}</td>
-                                <td><div data-id="{{ID}}" class="btn btn-status btn-status-content">{{{Status}}}</div></td>
+                                <td><div data-id="{{ID}}" class="btn-status-content">{{{Status}}}</div></td>
                                 <td>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content"><i class="ti-eye"></i> Xem</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-content"><i class="fa fa-edit"></i> Sửa</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-content"><i class="ti-trash"></i> Xoá</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content btn-table"><i class="ti-eye"></i> Xem</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-content btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-content btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
                             </tr>
                         </script>
@@ -168,29 +180,146 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group clearfix">
-                            <label class="label-location pull-left" for="name"><strong>Tiêu Đề</strong></label>
-                            <input type="text" class="form-control-sm support-input" id="name" placeholder="" required />
+                        <div class="form-group">
+                             <input type="text" class="form-control" id="idContent" value="0" hidden="hidden" readonly="readonly"/>
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="nameContent"><strong>Tiêu Đề</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nameContent" placeholder="ABC" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;">
+                            <label for="imageContent"><strong>Hình Ảnh</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control txtImg" id="imageContent" disabled="disabled" required />
+                                <button class="btn btn-light btnSelectedImg" id="btnSelecedImgNews">Chọn Ảnh</button>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="phone"><strong>Số Điện Thoại</strong></label>
-                            <input type="number" class="form-control" id="phone" placeholder="0926112017" required />
+                            <label for="detailContent"><strong>Nội Dung</strong></label>
+                            <div class="input-group">
+                                <textarea class="form-control" id="detailContent" required></textarea>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="address"><strong>Địa Chỉ</strong></label>
-                            <textarea class="form-control" id="address" placeholder="176/5 DT745 Street" required></textarea>
+                            <label for="metaDescriptionContent"><strong>Mô Tả Trang</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="metaDescriptionContent" required />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mail"><strong>Email</strong></label>
-                            <input type="email" class="form-control" id="mail" placeholder="abc@gmail.com" required />
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="metaKeywordsContent"><strong>Từ Khoá Tìm Kiếm</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="metaKeywordsContent" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;">
+                            <label for="tags"><strong>Tags</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="tags" placeholder="khoa-hoc; doi-song;" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="categoryID"><strong>Danh Mục: </strong></label>
+                            <select id="selectCategoryID"></select>
+                        </div>
+                        <div class="pull-right" style="width:48%;margin: 18px 0 0 8px;">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" checked class="custom-control-input" id="statusContent"/>
+                                <label class="custom-control-label" for="statusContent"><strong>Hiển Thị Bài Viết </strong></label>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="createEditUser">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditContent">Lưu Thay Đổi</button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+@*  News Categories  *@
+<div class="row">
+    @* Form add - edit news category *@
+    <div class="col-lg-4 pull-left" id="addEditMenu">
+        <div class="col-12 mt-5">
+            <div class="menu-area" style="display: inline-block;"> 
+                <div class="menu-header">
+                    <div class="menu-title pull-left">Quản Lý Danh Mục Tin Tức</div>
+                    <div class="col-ml-4 pull-right">
+                        <div class="btn btn-success btn-menu-area" style="padding: 5px 8px;" id="btnAddNewsCategory" title="Thêm Danh Mục"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <form class="form-menu">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="idNewsCategory" value="0" hidden="hidden" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nameNewsCategory"><strong>Tên Danh Mục</strong></label>
+                        <input type="text" class="form-control" id="nameNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Thể Loại Danh Mục</strong></label>
+                        <div class="input-group">
+                            <select id="selectNewsCategory" class="pull-left">
+                                <option value="0" selected> Danh Mục Chính</option>
+                                <option value="1"> Danh Mục Con</option>
+                            </select>
+                            <select id="selectNewsCategoryChild" class="pull-right" hidden style="margin-left: 10px;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:inline-block;width: 100%;">
+                        <label class="pull-left label-number"><strong>Thứ Tự Hiển Thị</strong></label>
+                        <div class="pull-right" style="width: 49%">
+                            <div class="btn btn-light pull-left btn-minus-number" id="minusNewsCategory"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                            <input type="text" readonly="readonly" class="pull-left input-number" id="displayOrderNewsCategory" value="0" />
+                            <div class="btn btn-light pull-left btn-plus-number" id="plusNewsCategory"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="clear:both;">
+                        <label for="metaKeywordsNewCategory"><strong>Từ Khoá Tìm Kiếm</strong></label>
+                        <input type="text" class="form-control" id="metaKeywordsNewCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescriptionsNewsCategory"><strong>Mô Tả Trang</strong></label>
+                        <input type="text" class="form-control" id="metaDescriptionsNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="titleNewsCategory"><strong>Tiêu Đề Trang</strong></label>
+                        <input type="text" class="form-control" id="titleNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" checked class="custom-control-input" id="statusNewsCategory" />
+                            <label class="custom-control-label" for="statusNewsCategory"><strong>Hiển Thị Danh Mục </strong></label>
+                        </div>
+                    </div>
+                </form>
+                <div class="footer-form">
+                    <button class="btn btn-success pull-right" id="createEditNewsCategory">Thêm Mới</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* list news category *@
+    <div class="pull-right">
+        <div id="listNewsCaterogy"></div>
+        <script id="newsCategory-data" type="x-tmpl-mustache">
+            <div class="line-menu pull-left">
+                <div class="pull-left"><strong>{{DisplayOrder}}.</strong></div>
+                <div class="pull-left"><strong>{{Name}}</strong></div>
+                <div class="pull-right">{{{Status}}}</div>
+            </div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-newcategory btn-table pull-left"><i class="fa fa-edit"></i></div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-newcategory btn-table pull-left"><i class="ti-trash"></i></div>
+            <div style="margin-left:50px; clear:both;">
+                <div style="">{{NewsCategoryChild}}</div>
+            </div>
+            
+        </script>
     </div>
 </div>

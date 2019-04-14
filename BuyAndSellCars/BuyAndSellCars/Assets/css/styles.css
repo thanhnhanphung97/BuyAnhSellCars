@@ -107,7 +107,7 @@
     left: 0;
     top: 0;
     z-index: 99;
-    height: 100%!important;
+    height: 100vh;
     width: 280px;
     overflow: hidden;
     background: #303641;
@@ -116,18 +116,22 @@
     transition: all 0.3s ease 0s;
 }
 
+.slimScrollDiv {
+    
+}
+
 .sbar_collapsed .sidebar-menu {
     left: -280px;
 }
 
 .main-menu {
-    height: calc(100% - 80px);
-    min-height: 700px!important;
+    height: calc(100% - 100px);
     overflow: hidden;
     padding: 20px 10px 0 0;
     -webkit-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
 }
+
 .menu-inner {
     overflow-y: scroll;
     height: 100%;
@@ -1501,7 +1505,7 @@ table.dbkit-table tr td {
     opacity: 0;
 }
 
-@-webkit-keyframes pulse {
+@-webkit-keyframes "pulse" {
     0% {
         -webkit-transform: scale(0);
         opacity: 0.0;
@@ -1762,6 +1766,17 @@ table.dbkit-table tr td {
     color: #d6a20c;
 }
 
+.alert-error{
+    color: red;
+}
+
+.alert-error ul li{
+    list-style-type: circle;
+    margin-left: 20px;
+    margin-top: -30px;
+    margin-bottom: 20px;
+}
+
 /* additional content */
 
 .alert-heading {
@@ -1784,10 +1799,9 @@ table.dbkit-table tr td {
 /*-------------------- 10. Badge------------------- */
 
 .btn {
-    padding: 11px 17px;
+    padding: 10px 16px;
     font-size: 14px;
     letter-spacing: 0;
-    margin-top: -5px;
 }
 
 .btn-xl {
@@ -2321,7 +2335,7 @@ table.dataTable thead td {
 .login-form-head {
     text-align: center;
     background: #8655FC;
-    padding: 50px;
+    padding: 50px 50px 25px 50px;
 }
 
 .login-form-head h4 {
@@ -2363,9 +2377,21 @@ table.dataTable thead td {
 
 .form-gp input {
     width: 100%;
-    height: 30px;
+    height: 40px;
     border: none;
     border-bottom: 1px solid #e6e6e6;
+}
+
+.form-gp input[type=text], select{
+    margin: 8px 0;
+    border-radius: 4px;
+    padding: 6px 10px;
+}
+
+.form-gp input[type=password], select{
+    margin: 8px 0;
+    border-radius: 4px;
+    padding: 6px 10px;
 }
 
 .form-gp input::-webkit-input-placeholder {
@@ -2387,7 +2413,7 @@ table.dataTable thead td {
 .form-gp i {
     position: absolute;
     right: 5px;
-    bottom: 15px;
+    bottom: 20px;
     color: #7e74ff;
     font-size: 16px;
 }
@@ -2833,14 +2859,216 @@ table.dataTable thead td {
     color: #555;
 }
 
-.btn-status{
-    cursor:pointer;
-    padding: 3px 5px;
-    border: 0px;
-}
-
 .btn-add-location{
     margin: -10px -15px 0 0;
 }
 
+
+/* design */
+
+.input-group>.txtImg {
+    float:left;
+}
+.input-group>.btnSelectedImg{
+    float:right;
+    margin-left: 2px;
+}
+
+.clearfix{
+    clear:both;
+}
+
+.slimScrollDiv{
+    min-height: 100%!important;
+}
+
+.menu-inner{
+    min-height: 100%!important;
+}
+
+.btn-table {
+    cursor: pointer;
+    margin-top: -3px;
+    padding: 3px 10px;
+    border:0;
+}
+
+select {
+   -webkit-appearance: button;
+   -webkit-border-radius: 5px;
+   -webkit-box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+   -webkit-padding-end: 20px;
+   -webkit-padding-start: 2px;
+   -webkit-user-select: none;
+   -moz-border-radius: 20px;
+   background-image: url('../images/icon/icon-select-down.png'), -webkit-linear-gradient(#FAFAFA, #F4F4F4 40%, #E5E5E5);
+   background-position: 97% center;
+   background-repeat: no-repeat;
+   background-color: #FAFAFA;
+   border-radius: 5px;
+   border: 1px solid rgba(170, 170, 170, .3);
+   font-size: 14px;
+   margin-left: 10px;
+   overflow: hidden;
+   padding: .67rem .8rem;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+   height: 42px;
+   width: calc(50% + 40px);
+}
+
+option {
+    border: 1px solid rgba(170, 170, 170, .3);
+    border-radius: 5px;
+    padding: .67rem .8rem;
+}
+
+.menu-area {
+    width: 120%;
+    position: relative;
+    height: 680px; 
+    border: 1px solid #b1a7a7;
+    background-color: #cbc8c8;
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 3px #5c6d78;
+}
+
+.menu-header {
+    width: 100%;
+    padding: 1rem;
+    border-bottom: 1px solid #b1a7a7;
+    height: 60px;
+}
+
+@media screen and (max-height: 900px) {
+    .menu-area {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .menu-header {
+        height: 60px!important;
+    }
+    .menu-area {
+        width: 100%;
+    }
+    #addEditMenu {
+        width: 30%;
+    }
+    .btn-menu-area {
+        margin-top: 0px!important;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1600px){
+    #addEditMenu {
+        width: 40%;
+    }
+    .menu-area {
+        height: 700px!important;
+        width: 120%;
+    }
+    .menu-header {
+        height: 85px;
+        border-bottom: 1px solid #b1a7a7;
+    }
+    .btn-menu-area {
+        margin-top: 17px;
+    }
+    .btn-minus-number {
+        padding: 5px 8px;
+        margin-left: 1px!important;
+    }
+    .input-number {
+        width: 50px!important;
+        margin: -2px 0 0 2px;
+        padding: 4px 8px;
+        border-radius: 3px;
+        text-align:center;
+    }
+    .btn-plus-number {
+        padding: 5px 8px;
+        margin-left: 2px;
+    }
+}
+
+.form-menu {
+    clear: both; 
+    font-size: 16px;
+    padding: 0 10px;
+}
+
+.menu-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: inherit;
+    display: block;
+    padding: 5px 0 5px 5px;
+    width: 70%;
+}
+
+select#selectNewsCategory, select#selectNewsCategoryChild {
+    width: 48%;
+    margin: 0;
+}
+
+select#selectCategoryID {
+    width: 200px;
+}
+
+.btn-minus-number {
+    padding: 5px 8px;
+}
+
+.input-number {
+    width: 60px;
+    margin: -2px 2px 2px 2px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    text-align:center;
+}
+
+.btn-plus-number {
+    padding: 5px 8px;
+    margin-left: 2px;
+}
+
+.label-number {
+    padding: 5px 8px 5px 0;
+    margin-top: 3px;
+}
+
+.footer-form {
+    border-top: 1px solid #b1a7a7;
+    width: 100%;
+}
+.footer-form button {
+    margin: 10px;
+    padding: 5px;
+}
+
+#addEditMenu {
+    margin-top: -25px;
+}
+
+.line-menu {
+    border: 1px solid #666;
+    background-color: #d3cbcb;
+    font-size: 14px;
+    font-weight: 500;
+    width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* */
+
+
+
 /*-------------------- END Offset Sidebar ------------------- */
+

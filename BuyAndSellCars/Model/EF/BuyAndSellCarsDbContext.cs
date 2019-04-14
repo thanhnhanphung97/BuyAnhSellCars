@@ -16,7 +16,6 @@ namespace Model.EF
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<CarCategory> CarCategories { get; set; }
         public virtual DbSet<CarPart> CarParts { get; set; }
-        public virtual DbSet<NewsCategory> NewsCategories { get; set; }
         public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
         public virtual DbSet<ContentTag> ContentTags { get; set; }
@@ -24,6 +23,7 @@ namespace Model.EF
         public virtual DbSet<Footer> Footers { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<MenuType> MenuTypes { get; set; }
+        public virtual DbSet<NewsCategory> NewsCategories { get; set; }
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -103,22 +103,6 @@ namespace Model.EF
                 .Property(e => e.MetaDescriptions)
                 .IsFixedLength();
 
-            modelBuilder.Entity<NewsCategory>()
-                .Property(e => e.MetaTitle)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<NewsCategory>()
-                .Property(e => e.CreatedBy)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<NewsCategory>()
-                .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<NewsCategory>()
-                .Property(e => e.MetaDescriptions)
-                .IsFixedLength();
-
             modelBuilder.Entity<Content>()
                 .Property(e => e.MetaTitle)
                 .IsUnicode(false);
@@ -142,6 +126,22 @@ namespace Model.EF
             modelBuilder.Entity<Footer>()
                 .Property(e => e.ID)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<NewsCategory>()
+                .Property(e => e.MetaTitle)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NewsCategory>()
+                .Property(e => e.CreatedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NewsCategory>()
+                .Property(e => e.ModifiedBy)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<NewsCategory>()
+                .Property(e => e.MetaDescriptions)
+                .IsFixedLength();
 
             modelBuilder.Entity<Tag>()
                 .Property(e => e.ID)
