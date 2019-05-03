@@ -23,7 +23,5 @@ namespace Model.EF
         public string Target { get; set; }
 
         public bool? Status { get; set; }
-
-        public int? TypeID { get; set; }
     }
 }

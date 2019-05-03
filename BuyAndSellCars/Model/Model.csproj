@@ -52,8 +52,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\CarCategoryDAO.cs" />
+    <Compile Include="DAO\CarDAO.cs" />
+    <Compile Include="DAO\CarPartDAO.cs" />
+    <Compile Include="DAO\CarPartCategoryDAO.cs" />
     <Compile Include="DAO\ContentDAO.cs" />
+    <Compile Include="DAO\ManufacturerDAO.cs" />
+    <Compile Include="DAO\MenuDAO.cs" />
     <Compile Include="DAO\NewsCategoryDAO.cs" />
+    <Compile Include="DAO\OriginDAO.cs" />
+    <Compile Include="DAO\SalientFeatureDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
     <Compile Include="EF\About.cs" />
     <Compile Include="EF\BuyAndSellCarsDbContext.cs" />
@@ -61,24 +69,34 @@
     <Compile Include="EF\CarCategory.cs" />
     <Compile Include="EF\CarPart.cs" />
     <Compile Include="EF\CarPartCategory.cs" />
-    <Compile Include="EF\NewsCategory.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Content.cs" />
     <Compile Include="EF\ContentTag.cs" />
     <Compile Include="EF\Feedback.cs" />
     <Compile Include="EF\Footer.cs" />
+    <Compile Include="EF\Manufacturer.cs" />
     <Compile Include="EF\Menu.cs" />
-    <Compile Include="EF\MenuType.cs" />
+    <Compile Include="EF\NewsCategory.cs" />
+    <Compile Include="EF\Origin.cs" />
+    <Compile Include="EF\SalientFeature.cs" />
     <Compile Include="EF\SystemConfig.cs" />
     <Compile Include="EF\Tag.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\CarCategoryChild.cs" />
+    <Compile Include="ViewModel\CarPartCategoryChild.cs" />
+    <Compile Include="ViewModel\NewsCategoryChild.cs" />
+    <Compile Include="ViewModel\ViewCarCategoryModel.cs" />
+    <Compile Include="ViewModel\ViewCarPartCategoryModel.cs" />
     <Compile Include="ViewModel\ViewContentModel.cs" />
+    <Compile Include="ViewModel\ViewNewsCategoryModel.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
