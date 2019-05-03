@@ -11,7 +11,6 @@ namespace Model.EF
     {
         public long ID { get; set; }
 
-        [Column(TypeName = "ntext")]
         public string Content { get; set; }
 
         public bool? Status { get; set; }

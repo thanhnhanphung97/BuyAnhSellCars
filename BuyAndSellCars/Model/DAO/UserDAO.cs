@@ -88,14 +88,13 @@ namespace Model.DAO
             }
             catch (Exception)
             {
-                throw;
+                return false;
             }
-            return false;
         }
-        public bool? ChangeStatus(int Id)
+        public bool? ChangeStatus(long Id)
         {
             User user = db.Users.Find(Id);
-            user.Status = !user.Status;
+            user.Status = user.Status == true ? false : true;
             try
             {
                 db.SaveChanges();

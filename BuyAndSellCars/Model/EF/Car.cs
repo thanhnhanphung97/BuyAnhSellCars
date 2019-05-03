@@ -20,12 +20,17 @@ namespace Model.EF
         public string MetaTitle { get; set; }
 
         [StringLength(250)]
+        public string SeoTitle { get; set; }
+
+        [StringLength(250)]
         public string Image { get; set; }
 
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
 
         public decimal? Price { get; set; }
+
+        public decimal? PrePay { get; set; }
 
         [StringLength(10)]
         public string Model { get; set; }
@@ -46,8 +51,7 @@ namespace Model.EF
         [StringLength(20)]
         public string InteriorColor { get; set; }
 
-        [StringLength(50)]
-        public string Origin { get; set; }
+        public int? OriginID { get; set; }
 
         public int? YearOfManufacture { get; set; }
 
@@ -61,8 +65,24 @@ namespace Model.EF
         [Column(TypeName = "xml")]
         public string SalientFeatures { get; set; }
 
-        public bool? Deposited { get; set; }
+        public DateTime? CreatedDate { get; set; }
+
+        [StringLength(50)]
+        public string CreatedBy { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        [StringLength(50)]
+        public string ModifiedBy { get; set; }
+
+        [StringLength(250)]
+        public string MetaKeywords { get; set; }
+
+        [StringLength(250)]
+        public string MetaDescriptions { get; set; }
 
         public bool? Sold { get; set; }
+
+        public bool? Status { get; set; }
     }
 }
