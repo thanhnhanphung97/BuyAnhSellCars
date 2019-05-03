@@ -20,7 +20,6 @@ namespace Model.EF
         [StringLength(500)]
         public string Description { get; set; }
 
-        [Column(TypeName = "ntext")]
         public string Detail { get; set; }
 
         public DateTime? CreatedDate { get; set; }

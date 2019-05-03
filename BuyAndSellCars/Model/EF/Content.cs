@@ -22,7 +22,6 @@ namespace Model.EF
 
         public long? CategoryID { get; set; }
 
-        [Column(TypeName = "ntext")]
         public string Detail { get; set; }
 
         public DateTime? CreatedDate { get; set; }

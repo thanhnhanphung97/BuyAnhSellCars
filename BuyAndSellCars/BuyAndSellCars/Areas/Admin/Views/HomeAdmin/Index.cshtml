@@ -4,18 +4,142 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 @section scripts{
-    <script src="/Assets/js/plugins/mustache.min.js"></script>
-    <script src="/Assets/js/plugins/jquery.twbsPagination.min.js"></script>
-    <script src="/Assets/js/controllers/userController.js"></script>
-    <script src="/Assets/js/controllers/newsCategoryController.js"></script>
-    <script src="/Assets/js/controllers/contentController.js"></script>
-    <script>
+    <script src="/Assets/Admin/js/plugins/ckeditor/adapters/jquery.js"></script>
+    <script src="/Assets/Admin/js/plugins/mustache.min.js"></script>
+    <script src="/Assets/Admin/js/plugins/jquery.twbsPagination.min.js"></script>
 
+    <script src="/Assets/Admin/js/controllers/userController.js"></script>
+    <script src="/Assets/Admin/js/controllers/contentController.js"></script>
+    <script src="/Assets/Admin/js/controllers/newsCategoryController.js"></script>
+    <script src="/Assets/Admin/js/controllers/carpartCategoryController.js"></script>
+    <script src="/Assets/Admin/js/controllers/carCategoryController.js"></script>
+    <script src="/Assets/Admin/js/controllers/carpartController.js"></script>
+    <script src="/Assets/Admin/js/controllers/carController.js"></script>
+    <script src="/Assets/Admin/js/controllers/originController.js"></script>
+    <script src="/Assets/Admin/js/controllers/manufacturerController.js"></script>
+    <script src="/Assets/Admin/js/controllers/homeCategoryController.js"></script>
+    <script src="/Assets/Admin/js/controllers/salientController.js"></script>
+    <script>
+        var editor = CKEDITOR.replace('detailContent', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+            htmlEncodeOutput: true
+        });
+        var editor = CKEDITOR.replace('descriptionCarPart', {
+            customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
+            htmlEncodeOutput: true
+        });
+        $('#btnSelecedImgNews').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#imageContent').val(url);
+            };
+            finder.popup();
+        });
+        $('#btnSelecedImgCarPart').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#imageCarpart').val(url);
+            };
+            finder.popup();
+        });
+        $('#btnSelecedImgCar').on('click', function (e) {
+            e.preventDefault();
+            var finder = new CKFinder();
+            finder.selectActionFunction = function (url) {
+                $('#imageCar').val(url);
+            };
+            finder.popup();
+        });
+        document.getElementById('priceCarPart').onkeyup = function () {
+            this.value = parseFloat(this.value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        };
+        document.getElementById('promotionPrice').onkeyup = function () {
+            this.value = parseFloat(this.value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        };
+        document.getElementById('priceCar').onkeyup = function () {
+            this.value = parseFloat(this.value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        };
+        document.getElementById('prepayCar').onkeyup = function () {
+            this.value = parseFloat(this.value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+        };
     </script>
 }
 
+@* Main Menu *@
+<div class="row" style="margin-bottom: 180px;" hidden>
+    @* Form add - edit menu *@
+    <div class="col-lg-4 pull-left add-edit-menu">
+        <div class="col-12">
+            <div class="menu-area-home" style="display: inline-block;">
+                <div class="menu-header">
+                    <div class="menu-title pull-left">Quản Lý Danh Mục Trang Chủ</div>
+                    <div class="col-ml-4 pull-right">
+                        <div class="btn btn-success btn-menu-area" style="padding: 5px 8px;" id="btnAddHomeCategory" title="Thêm Danh Mục"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <form class="form-menu">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="idHomeCategory" value="0" hidden="hidden" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nameCarCategory"><strong>Tên Danh Mục</strong></label>
+                        <input type="text" class="form-control" id="nameHomeCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="linkHomeCategory"><strong>Đường Dẫn (Url)</strong></label>
+                        <input type="text" class="form-control" id="linkHomeCategory" required />
+                    </div>
+                    <div class="form-group" style="display:inline-block;width: 100%;">
+                        <label class="pull-left label-number"><strong>Thứ Tự Hiển Thị</strong></label>
+                        <div class="pull-right" style="width: 49%;margin-right:20px;">
+                            <div class="btn btn-light pull-left btn-minus-number" id="minusHomeCategory"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                            <input type="text" readonly="readonly" class="pull-left input-number" id="displayOrderHomeCategory" value="0" />
+                            <div class="btn btn-light pull-left btn-plus-number" id="plusHomeCategory"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:inline-block;width: 100%;">
+                        <label class="pull-left label-number"><strong>Target</strong></label>
+                        <div class="pull-right" style="width: 49%;margin:-7px 30px 0 0;">
+                            <select id="targetHomeCategory" class="pull-left" style="width:180px;">
+                                <option value="_blank" selected> Mở Trong Tab Mới</option>
+                                <option value="_self"> Mở Trong Trang</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" checked class="custom-control-input" id="statusHomeCategory" />
+                            <label class="custom-control-label" for="statusHomeCategory"><strong>Hiển Thị Danh Mục </strong></label>
+                        </div>
+                    </div>
+                </form>
+                <div class="footer-form">
+                    <button class="btn btn-success pull-right" id="createEditHomeCategory">Thêm Mới</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* list home category *@
+    <div class="pull-right list-menu-area">
+        <div id="listHomeCaterogy"></div>
+        <script id="homeCategory-data" type="x-tmpl-mustache">
+            <div class="line-menu pull-left">
+                <div class="pull-left"><strong>{{DisplayOrder}}.</strong></div>
+                <div class="pull-left"><strong>{{Name}}</strong></div>
+                <div class="pull-right btn-stt-homecategory" data-id="{{ID}}">{{{Status}}}</div>
+            </div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-info btn-edit-homecategory" title="Sửa"><i class="fa fa-edit"></i></div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-danger btn-delete-homecategory" title="Xoá"><i class="ti-trash"></i></div>
+            <div class="clearfix"></div>
+        </script>
+    </div>
+</div>
+
 @* Users *@
-<div class="row">
+<div class="row" hidden>
     @* danh sách dữ liệu người dùng *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -50,10 +174,10 @@
                                 <td>{{Name}}</td>
                                 <td>{{Phone}}</td>
                                 <td>{{Email}}</td>
-                                <td><div data-id="{{ID}}" class="btn btn-status btn-status-user">{{{Status}}}</div></td>
+                                <td><div data-id="{{ID}}" class="btn-status-user">{{{Status}}}</div></td>
                                 <td>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-user"><i class="fa fa-edit"></i> Sửa</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-user"><i class="ti-trash"></i> Xoá</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-user btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-user btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
                             </tr>
                         </script>
@@ -100,8 +224,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="createEditUser">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditUser">Lưu Thay Đổi</button>
                 </div>
             </div>
         </div>
@@ -109,7 +233,7 @@
 </div>
 
 @* News - Content *@
-<div class="row">
+<div class="row" hidden>
     @* danh sách tin tức *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -144,11 +268,11 @@
                                 <td>{{CreatedBy}}</td>
                                 <td>{{CategoryName}}</td>
                                 <td>{{ViewCount}}</td>
-                                <td><div data-id="{{ID}}" class="btn btn-status btn-status-content">{{{Status}}}</div></td>
+                                <td><div data-id="{{ID}}" class="btn-status-content">{{{Status}}}</div></td>
                                 <td>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content"><i class="ti-eye"></i> Xem</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-content"><i class="fa fa-edit"></i> Sửa</div>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-content"><i class="ti-trash"></i> Xoá</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content btn-table"><i class="ti-eye"></i> Xem</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-content btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-content btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
                             </tr>
                         </script>
@@ -168,29 +292,968 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="form-group clearfix">
-                            <label class="label-location pull-left" for="name"><strong>Tiêu Đề</strong></label>
-                            <input type="text" class="form-control-sm support-input" id="name" placeholder="" required />
+                        <div class="form-group">
+                             <input type="text" class="form-control" id="idContent" value="0" hidden="hidden" readonly="readonly"/>
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="nameContent"><strong>Tiêu Đề</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nameContent" placeholder="ABC" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;">
+                            <label for="imageContent"><strong>Hình Ảnh</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control txtImg" id="imageContent" disabled="disabled" required />
+                                <button class="btn btn-light btnSelectedImg" id="btnSelecedImgNews">Chọn Ảnh</button>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="phone"><strong>Số Điện Thoại</strong></label>
-                            <input type="number" class="form-control" id="phone" placeholder="0926112017" required />
+                            <label for="detailContent"><strong>Nội Dung</strong></label>
+                            <div class="input-group">
+                                <textarea class="form-control" id="detailContent" required></textarea>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="address"><strong>Địa Chỉ</strong></label>
-                            <textarea class="form-control" id="address" placeholder="176/5 DT745 Street" required></textarea>
+                            <label for="metaDescriptionContent"><strong>Mô Tả Trang</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="metaDescriptionContent" required />
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mail"><strong>Email</strong></label>
-                            <input type="email" class="form-control" id="mail" placeholder="abc@gmail.com" required />
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="metaKeywordsContent"><strong>Từ Khoá Tìm Kiếm</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="metaKeywordsContent" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;">
+                            <label for="tags"><strong>Tags</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="tags" placeholder="khoa-hoc; doi-song;" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="categoryID"><strong>Danh Mục: </strong></label>
+                            <select id="selectCategoryID"></select>
+                        </div>
+                        <div class="pull-right" style="width:48%;margin: 18px 0 0 8px;">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" checked class="custom-control-input" id="statusContent"/>
+                                <label class="custom-control-label" for="statusContent"><strong>Hiển Thị Bài Viết </strong></label>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="createEditUser">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditContent">Lưu Thay Đổi</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@*  News Categories  *@
+<div class="row" hidden>
+    @* Form add - edit news category *@
+    <div class="col-lg-4 pull-left add-edit-menu">
+        <div class="col-12">
+            <div class="menu-area" style="display: inline-block;"> 
+                <div class="menu-header">
+                    <div class="menu-title pull-left">Quản Lý Danh Mục Tin Tức</div>
+                    <div class="col-ml-4 pull-right">
+                        <div class="btn btn-success btn-menu-area" style="padding: 5px 8px;" id="btnAddNewsCategory" title="Thêm Danh Mục"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <form class="form-menu">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="idNewsCategory" value="0" hidden="hidden" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nameNewsCategory"><strong>Tên Danh Mục</strong></label>
+                        <input type="text" class="form-control" id="nameNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Thể Loại Danh Mục</strong></label>
+                        <div class="input-group">
+                            <select id="selectNewsCategory" class="pull-left">
+                                <option value="0" selected> Danh Mục Chính</option>
+                                <option value="1"> Danh Mục Con</option>
+                            </select>
+                            <select id="selectNewsCategoryChild" class="pull-right" hidden style="margin-left: 10px;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:inline-block;width: 100%;">
+                        <label class="pull-left label-number"><strong>Thứ Tự Hiển Thị</strong></label>
+                        <div class="pull-right" style="width: 49%">
+                            <div class="btn btn-light pull-left btn-minus-number" id="minusNewsCategory"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                            <input type="text" readonly="readonly" class="pull-left input-number" id="displayOrderNewsCategory" value="0" />
+                            <div class="btn btn-light pull-left btn-plus-number" id="plusNewsCategory"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="clear:both;">
+                        <label for="metaKeywordsNewCategory"><strong>Từ Khoá Tìm Kiếm</strong></label>
+                        <input type="text" class="form-control" id="metaKeywordsNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescriptionsNewsCategory"><strong>Mô Tả Trang</strong></label>
+                        <input type="text" class="form-control" id="metaDescriptionsNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="titleNewsCategory"><strong>Tiêu Đề Trang</strong></label>
+                        <input type="text" class="form-control" id="titleNewsCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" checked class="custom-control-input" id="statusNewsCategory" />
+                            <label class="custom-control-label" for="statusNewsCategory"><strong>Hiển Thị Danh Mục </strong></label>
+                        </div>
+                    </div>
+                </form>
+                <div class="footer-form">
+                    <button class="btn btn-success pull-right" id="createEditNewsCategory">Thêm Mới</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* list news category *@
+    <div class="pull-right list-menu-area">
+        <div id="listNewsCaterogy"></div>
+        <script id="newsCategory-data" type="x-tmpl-mustache">
+            <div class="line-menu pull-left">
+                <div class="pull-left"><strong>{{DisplayOrder}}.</strong></div>
+                <div class="pull-left"><strong>{{Name}}</strong></div>
+                <div class="pull-right btn-stt-newscategory" data-id="{{ID}}">{{{Status}}}</div>
+            </div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-info btn-edit-newscategory" title="Sửa"><i class="fa fa-edit"></i></div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-danger btn-delete-newscategory" title="Xoá"><i class="ti-trash"></i></div>
+            <div class="menu-child">
+                <div>{{{NewsCategoryChild}}}</div>
+            </div>
+        </script>
+    </div>
+</div>
+
+@* Carpart Categories *@
+<div class="row">
+    @* Form add - edit news category *@
+    <div class="col-lg-4 pull-left add-edit-menu">
+        <div class="col-12">
+            <div class="menu-area" style="display: inline-block;">
+                <div class="menu-header">
+                    <div class="menu-title pull-left">Quản Lý Danh Mục Phụ Tùng</div>
+                    <div class="col-ml-4 pull-right">
+                        <div class="btn btn-success btn-menu-area" style="padding: 5px 8px;" id="btnAddCarPartCategory" title="Thêm Danh Mục"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <form class="form-menu">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="idCarPartCategory" value="0" hidden="hidden" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nameCarPartCategory"><strong>Tên Danh Mục</strong></label>
+                        <input type="text" class="form-control" id="nameCarPartCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Thể Loại Danh Mục</strong></label>
+                        <div class="input-group">
+                            <select id="selectCarPartCategory" class="pull-left">
+                                <option value="0" selected> Danh Mục Chính</option>
+                                <option value="1"> Danh Mục Con</option>
+                            </select>
+                            <select id="selectCarPartCategoryChild" class="pull-right" hidden style="margin-left: 10px;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:inline-block;width: 100%;">
+                        <label class="pull-left label-number"><strong>Thứ Tự Hiển Thị</strong></label>
+                        <div class="pull-right" style="width: 49%">
+                            <div class="btn btn-light pull-left btn-minus-number" id="minusCarPartCategory"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                            <input type="text" readonly="readonly" class="pull-left input-number" id="displayOrderCarPartCategory" value="0" />
+                            <div class="btn btn-light pull-left btn-plus-number" id="plusCarPartCategory"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="clear:both;">
+                        <label for="metaKeywordsCarPartCategory"><strong>Từ Khoá Tìm Kiếm</strong></label>
+                        <input type="text" class="form-control" id="metaKeywordsCarPartCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescriptionsCarPartCategory"><strong>Mô Tả Trang</strong></label>
+                        <input type="text" class="form-control" id="metaDescriptionsCarPartCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="titleCarPartCategory"><strong>Tiêu Đề Trang</strong></label>
+                        <input type="text" class="form-control" id="titleCarPartCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" checked class="custom-control-input" id="statusCarPartCategory" />
+                            <label class="custom-control-label" for="statusCarPartCategory"><strong>Hiển Thị Danh Mục </strong></label>
+                        </div>
+                    </div>
+                </form>
+                <div class="footer-form">
+                    <button class="btn btn-success pull-right" id="createEditCarPartCategory">Thêm Mới</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* list news category *@
+    <div class="pull-right list-menu-area">
+        <div id="listCarPartCaterogy"></div>
+        <script id="carpartCategory-data" type="x-tmpl-mustache">
+            <div class="line-menu pull-left">
+                <div class="pull-left"><strong>{{DisplayOrder}}.</strong></div>
+                <div class="pull-left"><strong>{{Name}}</strong></div>
+                <div class="pull-right btn-stt-carpartcategory" data-id="{{ID}}">{{{Status}}}</div>
+            </div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-info btn-edit-carpartcategory" title="Sửa"><i class="fa fa-edit"></i></div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-danger btn-delete-carpartcategory" title="Xoá"><i class="ti-trash"></i></div>
+            <div class="menu-child">
+                <div>{{{CarPartCategoryChild}}}</div>
+            </div>
+        </script>
+    </div>
+</div>
+
+@* CarPart - Product *@
+<div class="row">
+    @* danh sách phụ tùng *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Phụ Tùng Ô Tô</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateCarPart" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Mã Code</th>
+                                    <th scope="col">Danh Mục</th>
+                                    <th scope="col">Tên Phụ Tùng</th>
+                                    <th scope="col">Hình Ảnh</th>
+                                    <th scope="col" style="min-width:125px!important;">Giá</th>
+                                    <th scope="col">Số Lượng</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblCarPart"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-carpart" class="pagination-md"></ul>
+                        </div>
+                        <script id="carpart-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Code}}</td>
+                                <td style="max-width: 150px">{{Category}}</td>
+                                <td style="max-width: 150px">{{Name}}</td>
+                                <td>{{{Image}}}</td>
+                                <td>{{{Price}}}</td>
+                                <td>{{Quantity}}</td>
+                                <td><div data-id="{{ID}}" class="btn-status-carpart">{{{Status}}}</div></td>
+                                <td style="min-width: 205px">
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-carpart btn-table"><i class="ti-eye"></i> Xem</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-carpart btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-carpart btn-table"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Add - Update - Carpart *@
+    <div class="modal fade bd-example-modal-lg" id="createEditCarPartModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-carpart">Thêm Mới Phụ Tùng</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="idCarPart" value="0" hidden="hidden" readonly="readonly" />
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="nameCarPart"><strong>Tên Phụ Tùng</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nameCarPart" placeholder="ABC" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;">
+                            <label for="imageCarpart"><strong>Hình Ảnh</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control txtImg" id="imageCarpart" disabled="disabled" required />
+                                <button class="btn btn-light btnSelectedImg" id="btnSelecedImgCarPart">Chọn Ảnh</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionCarPart"><strong>Thông Tin Phụ Tùng</strong></label>
+                            <div class="input-group">
+                                <textarea class="form-control" id="descriptionCarPart" required></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="codeCarPart"><strong>Mã Code</strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="codeCarPart" maxlength="10" onkeyup="this.value = this.value.toUpperCase();" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-select" style="width:48%;">
+                            <label for="categoryIdCarPart"><strong>Danh Mục Phụ Tùng </strong></label>
+                            <select id="categoryIdCarPart"></select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-select" style="width:48%;">
+                            <label for="originIdCarPart"><strong>Xuất Xứ</strong></label>
+                            <select id="originIdCarPart"></select>
+                        </div>
+                        <div class="form-group pull-right input-gp-select" style="width:48%;">
+                            <label for="manufacturerIdCarPart"><strong>Nhà Sản Xuất </strong></label>
+                            <select id="manufacturerIdCarPart"></select>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="priceCarPart"><strong>Đơn Giá Sản Phẩm</strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="priceCarPart" pattern="[0-9]*" style="text-align:center;" required />(đ)
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;margin: 18px 0 0 8px;">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="promotionChecked" />
+                                <label class="custom-control-label" for="promotionChecked"><strong>Giảm Giá </strong></label>
+                            </div>
+                            <div class="input-group input-number-carpart" hidden>
+                                <input type="text" class="form-control" id="promotionPrice" pattern="[0-9]*" style="text-align: center;" value="0" required />(đ)
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="quantityCarPart"><strong>Số Lượng Sản Phẩm</strong></label>
+                            <div class="input-group input-code">
+                                <input type="number" class="form-control" id="quantityCarPart" value="0" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-inline" style="width:48%;">
+                            <label for="warrantyCarPart"><strong>Bảo Hành </strong></label>
+                            <div class="input-group input-code">
+                                <input type="number" class="form-control" id="warrantyCarPart" value="0" required /><strong style="margin:10px 0 0 10px;">Tháng</strong>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="metaKeywordsCarPart"><strong>Từ Khoá Tìm Kiếm </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="metaKeywordsCarPart" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;margin: 18px 0 0 8px;">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" checked class="custom-control-input" id="statusCarPart" />
+                                <label class="custom-control-label" for="statusCarPart"><strong>Hiển Thị Sản Phẩm </strong></label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:98%;">
+                            <label for="seotitleCarPart"><strong>Tiêu Đề Trang </strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="margin-left: 18px;" id="seotitleCarPart" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:98%;">
+                            <label for="metaDescriptionsCarPart"><strong>Mô Tả Trang </strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="margin-left: 18px;" id="metaDescriptionsCarPart" required />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditCarPart">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Origin *@
+<div class="row">
+    @* danh sách dữ liệu Xuất sứ *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Xuất Sứ</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateOrigin" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên Xuất Sứ</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblOrigin"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-origin" class="pagination-md"></ul>
+                        </div>
+                        <script id="origin-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Name}}</td>
+                                <td><div data-id="{{ID}}" class="btn-status-origin">{{{Status}}}</div></td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-origin btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-origin btn-table"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal add - update origin *@
+    <div class="modal fade" id="createEditOriginModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-origin">Thêm Mới Xuất Sứ</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="nameOrigin"><strong>Tên Xuất Sứ</strong></label>
+                            <input type="text" class="form-control" id="nameOrigin" placeholder="abc" required />
+                            <div id="idOrigin" value="0" hidden></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" checked class="custom-control-input" id="statusOrigin" />
+                                <label class="custom-control-label" for="statusOrigin"><strong>Hiển Thị</strong></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditOrigin">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Manufacturer *@
+<div class="row">
+    @* danh sách dữ liệu Nhà Sản Xuất *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Nhà Sản Xuất</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateManufacturer" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên Nhà Sản Xuất</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblManufacturer"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-manufacturer" class="pagination-md"></ul>
+                        </div>
+                        <script id="manufacturer-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Name}}</td>
+                                <td><div data-id="{{ID}}" class="btn-status-manufacturer">{{{Status}}}</div></td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-manufacturer btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-manufacturer btn-table"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal add - update Manufacturer *@
+    <div class="modal fade" id="createEditManufacturerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-manufacturer">Thêm Mới Nhà Sản Xuất</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="nameManufacturer"><strong>Tên Nhà Sản Xuất</strong></label>
+                            <input type="text" class="form-control" id="nameManufacturer" placeholder="abc" required />
+                            <div id="idManufacturer" value="0" hidden></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" checked class="custom-control-input" id="statusManufacturer" />
+                                <label class="custom-control-label" for="statusManufacturer"><strong>Hiển Thị</strong></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditManufacturer">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Car Categories *@
+<div class="row" hidden>
+    @* Form add - edit news category *@
+    <div class="col-lg-4 pull-left add-edit-menu">
+        <div class="col-12">
+            <div class="menu-area" style="display: inline-block;">
+                <div class="menu-header">
+                    <div class="menu-title pull-left">Quản Lý Danh Mục Xe Ô Tô</div>
+                    <div class="col-ml-4 pull-right">
+                        <div class="btn btn-success btn-menu-area" style="padding: 5px 8px;" id="btnAddCarCategory" title="Thêm Danh Mục"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                    </div>
+                </div>
+                <form class="form-menu">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="idCarCategory" value="0" hidden="hidden" readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label for="nameCarCategory"><strong>Tên Danh Mục</strong></label>
+                        <input type="text" class="form-control" id="nameCarCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label><strong>Thể Loại Danh Mục</strong></label>
+                        <div class="input-group">
+                            <select id="selectCarCategory" class="pull-left">
+                                <option value="0" selected> Danh Mục Chính</option>
+                                <option value="1"> Danh Mục Con</option>
+                            </select>
+                            <select id="selectCarCategoryChild" class="pull-right" hidden style="margin-left: 10px;"></select>
+                        </div>
+                    </div>
+                    <div class="form-group" style="display:inline-block;width: 100%;">
+                        <label class="pull-left label-number"><strong>Thứ Tự Hiển Thị</strong></label>
+                        <div class="pull-right" style="width: 49%">
+                            <div class="btn btn-light pull-left btn-minus-number" id="minusCarCategory"><i class="fa fa-minus" aria-hidden="true"></i></div>
+                            <input type="text" readonly="readonly" class="pull-left input-number" id="displayOrderCarCategory" value="0" />
+                            <div class="btn btn-light pull-left btn-plus-number" id="plusCarCategory"><i class="fa fa-plus" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="clear:both;">
+                        <label for="metaKeywordsCarCategory"><strong>Từ Khoá Tìm Kiếm</strong></label>
+                        <input type="text" class="form-control" id="metaKeywordsCarCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="metaDescriptionsCarCategory"><strong>Mô Tả Trang</strong></label>
+                        <input type="text" class="form-control" id="metaDescriptionsCarCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="titleCarCategory"><strong>Tiêu Đề Trang</strong></label>
+                        <input type="text" class="form-control" id="titleCarCategory" required />
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-checkbox custom-control-inline">
+                            <input type="checkbox" checked class="custom-control-input" id="statusCarCategory" />
+                            <label class="custom-control-label" for="statusCarCategory"><strong>Hiển Thị Danh Mục </strong></label>
+                        </div>
+                    </div>
+                </form>
+                <div class="footer-form">
+                    <button class="btn btn-success pull-right" id="createEditCarCategory">Thêm Mới</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* list news category *@
+    <div class="pull-right list-menu-area">
+        <div id="listCarCaterogy"></div>
+        <script id="carCategory-data" type="x-tmpl-mustache">
+            <div class="line-menu pull-left">
+                <div class="pull-left"><strong>{{DisplayOrder}}.</strong></div>
+                <div class="pull-left"><strong>{{Name}}</strong></div>
+                <div class="pull-right btn-stt-carcategory" data-id="{{ID}}">{{{Status}}}</div>
+            </div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-info btn-edit-carcategory" title="Sửa"><i class="fa fa-edit"></i></div>
+            <div data-id="{{ID}}" class="btn btn-xs btn-danger btn-delete-carcategory" title="Xoá"><i class="ti-trash"></i></div>
+            <div class="menu-child">
+                <div>{{{CarCategoryChild}}}</div>
+            </div>
+        </script>
+    </div>
+</div>
+
+@* Cars - Product *@
+<div class="row" hidden>
+    @* danh sách ô tô *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách ÔTô</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateCar" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Tên ÔTô</th>
+                                    <th scope="col">Danh Mục</th>
+                                    <th scope="col">Hình Ảnh</th>
+                                    <th scope="col" style="min-width: 130px!important;">Giá</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">Quản Lý DS</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblCar"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-car" class="pagination-md"></ul>
+                        </div>
+                        <script id="car-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Name}}</td>
+                                <td>{{Category}}</td>
+                                <td>{{{Image}}}</td>
+                                <td>{{{Price}}}</td>
+                                <td><div data-id="{{ID}}" class="btn-status-car">{{{Status}}}</div></td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-salients-car btn-table"><i class="ti-bolt"></i> Tính Năng</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-images-car btn-table"><i class="ti-image"></i> Hình Ảnh</div>
+                                </td>
+                                <td style="min-width: 205px">
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-car btn-table"><i class="ti-eye"></i> Xem</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-car btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-car btn-table"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Add - Update - Car *@
+    <div class="modal fade bd-example-modal-lg" id="createEditCarModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-car">Thêm Mới ÔTô</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="idCar" value="0" hidden="hidden" readonly="readonly" />
+                        </div>
+                        <div class="form-group pull-left" style="width:41%;">
+                            <label for="nameCar"><strong>Tên ÔTô</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="nameCar" placeholder="ABC" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:41%; margin-right:60px;">
+                            <label for="imageCar"><strong>Hình Ảnh</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control txtImg" id="imageCar" disabled="disabled" required />
+                                <button class="btn btn-light btnSelectedImg" id="btnSelecedImgCar">Chọn Ảnh</button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="priceCar"><strong>Giá Bán</strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="priceCar" pattern="[0-9]*" value="0" style="text-align:center;" required />(đ)
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-inline" style="width:48%;">
+                            <label for="prepayCar"><strong>Trả Trước</strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="prepayCar" pattern="[0-9]*" value="0" style="text-align:center;" required />(đ)
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-select" style="width:48%;">
+                            <label for="categoryIdCar"><strong>Danh Mục ÔTô </strong></label>
+                            <select id="categoryIdCar"></select>
+                        </div>
+                        <div class="form-group pull-right input-gp-select" style="width:48%;">
+                            <label for="soldCar"><strong>Tình Trạng </strong></label>
+                            <select id="soldCar">
+                                <option value="true" selected>Xe Đang Bán</option>
+                                <option value="false">Xe Sắp Về</option>
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="modelCar"><strong>Kiểu Dáng </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="modelCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-inline" style="width:48%;">
+                            <label for="interiorcolorCar"><strong>Màu Nội Thất </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="interiorcolorCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="engineCar"><strong>Động Cơ </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="engineCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-select" style="width:48%;">
+                            <label for="originIdCar"><strong>Xuất Xứ</strong></label>
+                            <select id="originIdCar"></select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-select" style="width:48%;">
+                            <label for="fuelCar"><strong>Nhiên Liệu </strong></label>
+                            <select id="fuelCar">
+                                <option value="Xăng" selected>Xăng</option>
+                                <option value="Dầu">Dầu</option>
+                            </select>
+                        </div>
+                        <div class="form-group pull-right input-gp-inline" style="width:48%;">
+                            <label for="yearOfManuCar"><strong>Năm Sản Xuất</strong></label>
+                            <div class="input-group input-code">
+                                <input type="number" class="form-control" value="0" id="yearOfManuCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-select" style="width:48%;">
+                            <label for="gearCar"><strong>Hộp Số </strong></label>
+                            <select id="gearCar">
+                                <option value="Số Sàn" selected>Số Sàn</option>
+                                <option value="Số Tự Động">Số Tự Động</option>
+                            </select>
+                        </div>
+                        <div class="form-group pull-right input-gp-inline" style="width:48%;">
+                            <label for="seatsCar"><strong>Số Ghế</strong></label>
+                            <div class="input-group input-code">
+                                <input type="number" class="form-control" value="0" id="seatsCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="kmTraveledCar"><strong>Số Km Đã Đi </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="kmTraveledCar" pattern="[0-9]*" value="0" style="text-align:center;" required /> Km
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-select" style="width:48%;">
+                            <label for="driveSystemCar"><strong>Dẫn Động </strong></label>
+                            <select id="driveSystemCar">
+                                <option value="Một Cầu" selected>Một Cầu</option>
+                                <option value="Hai Cầu" >Hai Cầu</option>
+                                <option value="AWD: 4 Bánh Toàn Thời Gian">AWD: 4 Bánh Toàn Thời Gian</option>
+                            </select>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="colorCar"><strong>Màu Xe </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="colorCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-inline" style="width:48%;">
+                            <label for="doorsCar"><strong>Số Cửa </strong></label>
+                            <div class="input-group input-code">
+                                <input type="number" class="form-control" id="doorsCar" required />
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left input-gp-inline" style="width:48%;">
+                            <label for="metaKeywordsCar"><strong>Từ Khoá Tìm Kiếm </strong></label>
+                            <div class="input-group input-code">
+                                <input type="text" class="form-control" id="metaKeywordsCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;margin: 18px 0 0 8px;">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" checked class="custom-control-input" id="statusCar" />
+                                <label class="custom-control-label" for="statusCar"><strong>Hiển Thị Sản Phẩm </strong></label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:98%;">
+                            <label for="seotitleCar"><strong>Tiêu Đề Trang </strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="margin-left: 18px;" id="seotitleCar" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left input-gp-inline" style="width:98%;">
+                            <label for="metaDescriptionsCar"><strong>Mô Tả Trang </strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" style="margin-left: 18px;" id="metaDescriptionsCar" required />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditCar">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Salient - tính năng nổi bật *@
+    <div class="modal fade" id="salienModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tính Năng Nổi Bật</h5>
+                    <input type="hidden" id="hiddenCarID" hidden /> 
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group" style="width:96%;">
+                        <select multiple id="selectSalient"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="saveSalient">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal List Image - danh sách hình ảnh *@
+    <div class="modal fade" id="listImageModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Danh Sách Hình Ảnh</h5>
+                    <input type="hidden" id="hidCarID" hidden /> 
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input class="btn btn-light" type="button" value="Chọn Ảnh" id="selectListImage" />
+                    </div>
+                    <div class="form-group">
+                        <div id="listImageCar"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="saveListImage">Lưu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Salient Feature *@
+<div class="row" hidden>
+    @* danh sách tính năng đặc biệt - car - product *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Tính Năng Đặc Biệt</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateSalient" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên Tính Năng</th>
+                                    <th scope="col">Trạng Thái</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblSalient"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-salient" class="pagination-md"></ul>
+                        </div>
+                        <script id="salient-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Name}}</td>
+                                <td><div data-id="{{ID}}" class="btn-status-salient">{{{Status}}}</div></td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-salient btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-salient btn-table"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal add - update Salient *@
+    <div class="modal fade" id="createEditSalientModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-salient">Thêm Mới Tính Năng</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="nameSalient"><strong>Tên Tính Năng</strong></label>
+                            <input type="text" class="form-control" id="nameSalient" placeholder="abc" required />
+                            <div id="idSalient" value="0" hidden></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input type="checkbox" checked class="custom-control-input" id="statusSalient" />
+                                <label class="custom-control-label" for="statusSalient"><strong>Hiển Thị</strong></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditSalient">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
