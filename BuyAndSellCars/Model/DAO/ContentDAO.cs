@@ -95,11 +95,10 @@ namespace Model.DAO
             }
             catch (Exception)
             {
-                throw;
                 return false;
             }
         }
-        public bool ChangedStatus(int Id)
+        public bool? ChangeStatus(int Id)
         {
             Content entity = db.Contents.Find(Id);
             entity.Status = !entity.Status;

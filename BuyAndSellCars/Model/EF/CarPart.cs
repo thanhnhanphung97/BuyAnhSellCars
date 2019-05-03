@@ -20,20 +20,17 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaTitle { get; set; }
 
-        [StringLength(500)]
+        [StringLength(250)]
+        public string SeoTitle { get; set; }
+
         public string Description { get; set; }
 
         [StringLength(250)]
         public string Image { get; set; }
 
-        [Column(TypeName = "xml")]
-        public string MoreImages { get; set; }
-
         public decimal? Price { get; set; }
 
         public decimal? PromotionPrice { get; set; }
-
-        public bool? IncludedVAT { get; set; }
 
         public int? Quantity { get; set; }
 
@@ -41,11 +38,9 @@ namespace Model.EF
 
         public int? Warranty { get; set; }
 
-        [StringLength(50)]
-        public string Origin { get; set; }
+        public int? OriginID { get; set; }
 
-        [StringLength(50)]
-        public string Manufacturer { get; set; }
+        public int? ManufacturerID { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 

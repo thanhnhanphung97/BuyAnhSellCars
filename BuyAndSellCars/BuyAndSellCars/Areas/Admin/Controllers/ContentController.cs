@@ -38,7 +38,7 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             content.MetaTitle = Common.convertToUnSign.convert(content.Name);
             content.Detail = (String)System.Net.WebUtility.HtmlDecode(content.Detail);
             int result = dao.CreateEditContent(content, (string)Session[Common.CommonConstants.USER_NAME]);
-            return Json(new { rel = result });
+            return Json(new { res = result });
         }
         [HttpGet]
         public JsonResult GetContentByID(int Id)
@@ -55,10 +55,10 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             return Json(new { mes = msg });
         }
         [HttpPost]
-        public JsonResult ChangedStatus(int Id)
+        public JsonResult ChangeStatus(int Id)
         {
             var dao = new ContentDAO();
-            var stt = dao.ChangedStatus(Id);
+            var stt = dao.ChangeStatus(Id);
             return Json(new { res = stt });
         }
     }
