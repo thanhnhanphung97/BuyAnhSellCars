@@ -1,0 +1,120 @@
+﻿@model List<BuyAndSellCars.Models.CartItem>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = (Model.EF.User)ViewBag.UserInfo;
+}
+
+@section scripts{
+    <script>
+            function moneyFormat(str) {
+                str = parseFloat(str.toString().replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return str;
+            };
+            $(document).ready(function () {
+                resetMoneyFormat();
+            })
+            function resetMoneyFormat() {
+                $.each($('td.num_price'), function (i, item) {
+                    var price = $(this).html();
+                    price = moneyFormat(price);
+                    $(this).html(price + "đ");
+                });
+            }
+    </script>
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/phu-tung/tat-ca-phu-tung-20">Phụ Tùng</a></li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="col-md-4" style="margin-top: 30px;">
+        <div class="form-payment" style="width: 70%;">
+            @using (Html.BeginForm("Payment", "Cart", FormMethod.Post))
+            {
+                if (user != null)
+                {
+                    <div class="form-group">
+                        <label>Người Nhận</label>
+                        <input type="text" name="shipName" class="form-control" value="@user.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Điện Thoại</label>
+                        <input type="number" maxlength="10" name="mobile" class="form-control" value="@user.Phone" required />
+                    </div>
+                    <div class="form-group">
+                        <label>Địa Chỉ</label>
+                        <textarea style="height: 200px;" name="address" class="form-control" required>@user.Address</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" value="@user.Email" required />
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label>Người Nhận</label>
+                        <input type="text" name="shipName" class="form-control"  required />
+                    </div>
+                    <div class="form-group">
+                        <label>Điện Thoại</label>
+                        <input type="number" maxlength="10" name="mobile" class="form-control"  required />
+                    </div>
+                    <div class="form-group">
+                        <label>Địa Chỉ</label>
+                        <textarea style="height: 200px;" name="address" class="form-control" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+                }
+                <button type="submit" class="btn btn-default">Thanh Toán</button>
+            }
+        </div>
+    </div>
+
+    <div class="col-md-8 cartitem-list">
+        @if (Model.Count > 0)
+        {
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th style="min-width:80px;">Mã SP</th>
+                        <th>Tên SP</th>
+                        <th>Ảnh SP</th>
+                        <th>Số Lượng</th>
+                        <th>Dơn Giá</th>
+                        <th>Thành Tiền</th>
+                    </tr>
+                </thead>
+                <tbody class="cartitem_item">
+                    @{ var totalPrice = 0;}
+                    @foreach (var item in Model)
+                    {
+                        var price = item.CarPart.PromotionPrice != -1 ? item.CarPart.PromotionPrice : item.CarPart.Price;
+                        <tr>
+                            <td>@item.CarPart.ID</td>
+                            <td>@item.CarPart.Name</td>
+                            <td><img src="@item.CarPart.Image" width="70" /></td>
+                            <td><input type="number" class="quantity" disabled min="1" max="@item.CarPart.Quantity" value="@item.Quantity" data-id="@item.CarPart.ID" /></td>
+                            <td class="num_price">@price</td>
+                            <td class="num_price">@(price * item.Quantity)</td>
+                        </tr>
+                        totalPrice = totalPrice + ((int)price * item.Quantity);
+                    }
+                    <tr>
+                        <td>#</td>
+                        <td colspan="4"><strong>Tổng: </strong></td>
+                        <td class="num_price">@totalPrice</td>
+                    </tr>
+                </tbody>
+            </table>
+            }
+    </div>
+</div>
+

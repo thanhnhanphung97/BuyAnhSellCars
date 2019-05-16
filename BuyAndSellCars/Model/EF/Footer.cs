@@ -14,6 +14,6 @@ namespace Model.EF
 
         public string Content { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -1,0 +1,220 @@
+﻿@using Model.DAO;
+@model Model.EF.Car
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var categoryName = (Model.EF.CarCategory)ViewBag.CategoryCar;
+    var listImages = (List<string>)ViewBag.ListImages;
+    var listSalients = (List<string>)ViewBag.ListSalients;
+    var car = (Model.EF.Car)ViewBag.CarDetail;
+    var nameOrigin = new OriginDAO().GetOriginByID(Model.OriginID);
+}
+@section slides{
+}
+
+@section scripts {
+    <script src="/Assets/Clients/controller/viewcar.js"></script>
+    <script>
+        function moneyFormat(str) {
+            str = parseFloat(str.toString().replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return str;
+        };
+        function loadTotal(price, trcba, bienso) {
+            var price = price.toString().replace(/,/g, ""); price = parseInt(price);
+            var trcba = trcba.toString().replace(/,/g, ""); trcba = parseInt(trcba);
+            var bienso = bienso.toString().replace(/,/g, ""); bienso = parseInt(bienso);
+            
+            var totalPrice = moneyFormat((price + trcba + bienso));
+            $('#totalPrice').html(totalPrice);
+        }
+        $(document).ready(function () {
+            var price = $('#price').html();
+            price = moneyFormat(price);
+            $('#price').html(price);
+            var tax = $('#tax').html();
+            tax = moneyFormat(tax);
+            $('#tax').html(tax);
+        });
+        $('#selectCity').off('click').on('click', function () {
+            var index = $('#selectCity').val();
+            index = moneyFormat(index);
+            $('#licenseplates').html(index);
+            loadTotal($('#price').html(), $('#tax').html(),$('#licenseplates').html());
+        });
+        loadTotal($('#price').html(), $('#tax').html(), $('#licenseplates').html());
+    </script>
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/tim-mua-xe/">Xe ôtô</a></li>
+        <li><a href="/tim-mua-xe/@categoryName.MetaTitle-@categoryName.ID">@categoryName.Name</a></li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="col-md-8 car-detail">
+        @{  }
+        <div class="name-car"><strong></strong>@Model.Name</div>
+        <div class="img-car-show"><img id="img-show" src="@listImages[0]" /></div>
+        <div class="list-img-car">
+            <div class="btn btn-default btn-car-pre"><i class="fa fa-chevron-left" aria-hidden="true"></i></div>
+            @{
+                int index = 0;
+                foreach (var item in listImages)
+                {
+                    if (index > 4)
+                    {
+                        <img class="img-small" hidden data-id="@index" src="@item" width="115" height="70" />
+                    }
+                    else
+                    {
+                        <img class="img-small" data-id="@index" src="@item" width="115" height="70" />
+                    }
+                    index += 1;
+                }
+            }
+            <div class="btn btn-default btn-car-next"><i class="fa fa-chevron-right" aria-hidden="true"></i></div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="specifications">
+            <div class="spec-title"><span>Thông Số Kỹ Thuật</span></div>
+            <div class="spec-table">
+                <div class="pull-left" style="width:45%">
+                    <div class="name-column">Kiểu dáng</div>
+                    <div class="value-column">@Model.Model</div>
+                </div>
+                <div class="pull-right" style="width:45%">
+                    <div class="name-column">Màu nội thất</div>
+                    <div class="value-column">@Model.InteriorColor</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-left" style="width:45%">
+                    <div class="name-column">Động Cơ</div>
+                    <div class="value-column">@Model.Engine</div>
+                </div>
+                <div class="pull-right" style="width:45%">
+                    <div class="name-column">Xuất Sứ</div>
+                    <div class="value-column">@nameOrigin</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-left" style="width:45%">
+                    <div class="name-column">Nhiên Liệu</div>
+                    <div class="value-column">@Model.Fuel</div>
+                </div>
+                <div class="pull-right" style="width:45%">
+                    <div class="name-column">Năm Sản Xuất</div>
+                    <div class="value-column">@Model.YearOfManufacture</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-left" style="width:45%">
+                    <div class="name-column">Hộp Số</div>
+                    <div class="value-column">@Model.Gear</div>
+                </div>
+                <div class="pull-right" style="width:45%">
+                    <div class="name-column">Số Ghế</div>
+                    <div class="value-column">@Model.Seats</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-left" style="width:45%">
+                    <div class="name-column">Số Km Đã Đi</div>
+                    <div class="value-column">@Model.KmTraveled</div>
+                </div>
+                <div class="pull-right" style="width:45%">
+                    <div class="name-column">Dẫn Động</div>
+                    <div class="value-column">@Model.DriveSystem</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="pull-left" style="width:45%">
+                    <div class="name-column">Màu Xe</div>
+                    <div class="value-column">@Model.CarColor</div>
+                </div>
+                <div class="pull-right" style="width:45%">
+                    <div class="name-column">Số Cửa</div>
+                    <div class="value-column">@Model.Doors</div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="list-salients">
+            @if (listSalients != null)
+            {
+                <div class="salients-title"><span>Tính Năng Nổi Bật</span></div>
+                int i = 0;
+                foreach (var item in listSalients)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="salient-item"><i class="fa fa-check" aria-hidden="true"></i>@item</div>
+                    }
+                    if (i % 2 != 0)
+                    {
+                        <div class="salient-item"><i class="fa fa-check" aria-hidden="true"></i>@item</div>
+                            <div class="clearfix"></div>
+                    }
+                    i++;
+                }
+            }
+        </div>
+    </div>
+
+    <div class="col-md-4 contact-us">
+        <div class="show-status">
+            @{ 
+                var str = Model.Price.ToString();
+                var strPrice = str.Remove(str.Length - 6);
+            }
+            <div>Giá: <span class="price-car">@strPrice</span> Triệu</div>
+            <hr>
+            <div class="btn btn-contact"><i class="fa fa-phone" aria-hidden="true" ></i>Liên Hệ</div>
+        </div>
+        <div class="calculator-payment">
+            <div><span>ƯỚC TÍNH CHI PHÍ LĂN BÁNH</span></div>
+            <hr />
+            <div>
+                <strong>Tổng chi phí ước tính: </strong>
+                <strong class="num-price" id="totalPrice"></strong>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div>
+                <strong>Giá bán: </strong>
+                <strong class="num-price" id="price">@Model.Price</strong>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div>
+                <p>Chọn nơi đăng ký biển số: </p>
+                <select class="selectLoca" id="selectCity">
+                    <option value="11000000" selected>Hồ Chí Minh</option>
+                    <option value="20000000">Hà Nội</option>
+                    <option value="1000000">Tỉnh thành khác</option>
+                </select>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div>
+                <p>Trước bạ (tạm tính): </p>
+                @{ 
+                    var num = Double.Parse((Model.Price - 100000000).ToString()) * 0.02;
+                }
+                <p class="num-price" id="tax">@num</p>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div>
+                <p>Biển số : </p>
+                <p class="num-price" id="licenseplates">11,000,000</p>
+            </div>
+            <div class="clearfix"></div>
+            <hr />
+            <div class="warning-info">
+                Trên đây là tổng số tiền và các khoản mục chi phí dự kiến khách hàng cần thanh toán khi mua xe. Chi phí thực tế có thể thay đổi theo từng trường hợp.
+            </div>
+       </div>
+    </div>
+</div>

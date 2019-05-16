@@ -22,7 +22,7 @@ namespace BuyAndSellCars.Common
                 str += c;
             }
             string temp = str.Normalize(NormalizationForm.FormD);
-            return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'd').Replace(' ', '-');
+            return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'd').Replace(' ', '-').Replace('.','-').Replace(',','-');
         }
 
         public static char toLower(char c)

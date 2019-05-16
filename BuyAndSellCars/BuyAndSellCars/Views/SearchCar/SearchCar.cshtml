@@ -1,0 +1,134 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var carlist = (IEnumerable<Model.EF.Car>)ViewBag.CarListSearch;
+    var hangxe = (IEnumerable<Model.EF.CarCategory>)ViewBag.HangXe;
+    var dongxe = (IEnumerable<Model.EF.CarCategory>)ViewBag.DongXe;
+}
+
+@section scripts {
+    <script src="/Assets/Clients/controller/searchCarController.js"></script>
+    <script>
+        document.getElementById('min-price').onkeyup = function () {
+            this.value = parseFloat(this.value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $('#write_price').html($('#min-price').val() + "đ ~" + $('#max-price').val() + "đ");
+        };
+        document.getElementById('max-price').onkeyup = function () {
+            this.value = parseFloat(this.value.replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            $('#write_price').html($('#min-price').val() + "đ ~" + $('#max-price').val() +"đ");
+        };
+
+    </script>
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/tim-mua-xe/">Xe ôtô</a></li>
+    </ol>
+</div>
+<div class="clearfix"></div>
+
+<div class="container">
+    <div class="col-md-4">
+        <div class="search-car-form">
+            <div class="search-title"><i class="fa fa-search" aria-hidden="true"></i> Thêm Điều Kiện Tìm Kiếm</div>
+            <div class="search-cancel"><div class="btn btn-default" id="condition-search">Huỷ Điều Kiện Lọc</div></div>
+            <div class="car_category">
+                <div class="parent">
+                    <label>Hãng Xe</label>
+                    <select id="category-parent">
+                        <option value="0" selected>Chọn Hãng Xe</option>
+                        @foreach (var item in hangxe)
+                        {
+                            if (item.ID == (int)ViewBag.HangXeID)
+                            {
+                                <option value="@item.ID" selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="child">
+                    <label>Dòng Xe</label>
+                    <select id="category-child">
+                        <option value="0" selected>Chọn Dòng Xe</option>
+                        @if (dongxe != null)
+                        {
+                            foreach (var item in dongxe)
+                            {
+                                if (item.ID == (int)ViewBag.DongXeID)
+                                {
+                                    <option value="@item.ID" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.ID">@item.Name</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="car_price">
+                <label>Khoảng Giá</label>
+                <label id="write_price"></label>
+                <input type="text" id="min-price" value="@ViewBag.MinPrice" />
+                <input type="text" id="max-price" value="@ViewBag.MaxPrice" />
+            </div>
+            <div class="clearfix"></div>
+            <div class="search-button">
+                <div class="btn btn-default" id="btn-search-car">Tìm Kiếm </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 group-car">
+        <div class="sort_group">
+            <div class="btn btn-default" data-id="xedangban">Xe Đang Bán</div>
+            <div class="btn btn-default" data-id="xesapve">Xe Sắp Về</div>
+            <div class="btn btn-default" data-id="giatang">Giá Tăng Dần</div>
+            <div class="btn btn-default" data-id="giagiam">Giá Giảm Dần</div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="list-car">
+            @foreach (var item in carlist)
+            {
+                <div class="col-md-4 wthree_team_grid" style="height:300px!important;">
+                    <div class="hovereffect">
+                        <img src="@item.Image" alt="" width="240" height="170" class="img-responsive" />
+                        @{ string link = "/xe-oto/" + item.MetaTitle + '-' + item.ID; }
+                        <a href="@link"><h4 data-id="@item.ID">@item.Name</h4></a>
+                        <div class="car-info">
+                            <p>@item.YearOfManufacture|@item.KmTraveled Km|@item.CarColor|@item.Gear</p>
+                        </div>
+                        <div>
+                            @{
+                                var price = item.Price.ToString().Length;
+                                var prepay = item.PrePay.ToString().Length;
+                            }
+                            <div style="float:left;width:38%;font-size: 11px;"><p><span style="font-size:17px;color:red;font-weight:800;">@item.Price.ToString().Remove(price - 6)</span> Triệu</p></div>
+                            <div style="float:left;width:60%;font-size: 11px;margin-top: 5px;"><p>$Trả trước @item.PrePay.ToString().Remove(prepay - 6) Triệu</p></div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

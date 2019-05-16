@@ -1,0 +1,10 @@
+﻿@model IEnumerable<Model.EF.Menu>
+
+<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <ul class="nav navbar-nav navbar-right">
+        @foreach (var item in Model)
+        {
+            <li><a href="@item.Link" class="hvr-underline-from-center" target="@item.Target">@item.Text</a></li>
+        }
+    </ul>
+</div>

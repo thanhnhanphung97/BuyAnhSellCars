@@ -11,7 +11,7 @@ namespace Model.EF
     {
         public long ID { get; set; }
 
-        public long? CategoryID { get; set; }
+        public long CategoryID { get; set; }
 
         [StringLength(250)]
         public string Name { get; set; }
@@ -28,14 +28,14 @@ namespace Model.EF
         [Column(TypeName = "xml")]
         public string MoreImages { get; set; }
 
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
-        public decimal? PrePay { get; set; }
+        public decimal PrePay { get; set; }
 
         [StringLength(10)]
         public string Model { get; set; }
 
-        public double? Engine { get; set; }
+        public double Engine { get; set; }
 
         [StringLength(10)]
         public string Fuel { get; set; }
@@ -43,7 +43,7 @@ namespace Model.EF
         [StringLength(15)]
         public string Gear { get; set; }
 
-        public int? KmTraveled { get; set; }
+        public int KmTraveled { get; set; }
 
         [StringLength(20)]
         public string CarColor { get; set; }
@@ -51,26 +51,26 @@ namespace Model.EF
         [StringLength(20)]
         public string InteriorColor { get; set; }
 
-        public int? OriginID { get; set; }
+        public int OriginID { get; set; }
 
-        public int? YearOfManufacture { get; set; }
+        public int YearOfManufacture { get; set; }
 
-        public int? Seats { get; set; }
+        public int Seats { get; set; }
 
         [StringLength(50)]
         public string DriveSystem { get; set; }
 
-        public int? Doors { get; set; }
+        public int Doors { get; set; }
 
         [Column(TypeName = "xml")]
         public string SalientFeatures { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
@@ -81,8 +81,8 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
 
-        public bool? Sold { get; set; }
+        public bool Sold { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

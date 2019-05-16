@@ -290,4 +290,3 @@ var carpartCategoryController = {
         $('#createEditCarPartCategory').html("Thêm Mới");
     },
 }
-carpartCategoryController.init();

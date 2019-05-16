@@ -131,7 +131,9 @@ var carController = {
     loadListOrigin: function () {
         $.ajax({
             url: '/Origin/LoadListOrigin',
-            data: {},
+            data: {
+                type: originconfig.typeOrigin,
+            },
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -439,7 +441,7 @@ var carController = {
                     $('#listImageModal').modal('show');
                 }
                 else {
-                    toastr.error("Load Danh Sách Hình Ảnh Không Thành Công!", "Error");
+                    $('#listImageModal').modal('show');
                 }
             }
         });
@@ -465,10 +467,9 @@ var carController = {
                     $('#salienModal').modal('show');
                 }
                 else {
-                    toastr.error("Load Danh Sách Tính Năng Không Thành Công!", "Error");
+                    $('#salienModal').modal('show');
                 }
             }
         });
     },
 }
-carController.init();

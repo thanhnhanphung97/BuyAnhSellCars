@@ -9,6 +9,7 @@ namespace Model.ViewModel
     public class CarPartCategoryChild
     {
         public long Id { get; set; }
+        public string MetaTitle { get; set; }
         public string Name { get; set; }
         public int? DisplayOrder { get; set; }
         public bool? Status { get; set; }

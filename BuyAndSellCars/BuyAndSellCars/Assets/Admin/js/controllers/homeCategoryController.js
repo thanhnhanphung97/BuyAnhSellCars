@@ -208,4 +208,3 @@
         $('#statusHomeCategory').prop('checked', false);
     },
 }
-homeCategoryController.init();

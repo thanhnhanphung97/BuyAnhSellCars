@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Model.EF.Content>
+@{
+    ViewBag.Title = "ViewNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listcategory = (IEnumerable<Model.ViewModel.ViewNewsCategoryModel>)ViewBag.ListCategoryNews;
+    var categoryCurrent = (Model.EF.NewsCategory)ViewBag.CategoryCurrent;
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/tin-tuc/tin-tuc-12">Tin Tức</a></li>
+        @if (categoryCurrent != null)
+        {
+            <li><a href="/tin-tuc/@categoryCurrent.MetaTitle-@categoryCurrent.ID">@categoryCurrent.Name</a></li> 
+        }
+    </ol>
+</div>
+
+<div class="container">
+    <div class="col-md-4 news-category">
+        <div class="menu-title">DANH MỤC TIN TỨC</div>
+        <ul class="nav">
+            @foreach (var item in listcategory)
+            {
+                <li class="dropdown dropdown-menu-right">
+                    <a href="/tin-tuc/@item.MetaTitle-@item.ID" class="dropdown-toggle" data-toggle="dropdown">@item.Name <i class="fa fa-sort-desc" aria-hidden="true" style="float:right"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="/tin-tuc/@item.MetaTitle-@item.ID">@item.Name</a>
+                        </li>
+                        @foreach (var item_child in item.CategoryChild)
+                        {
+                            <li>
+                                <a href="/tin-tuc/@item_child.MetaTitle-@item_child.Id">@item_child.Name</a>
+                            </li>
+                        }
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+    <div class="col-md-8" style="margin-top: 30px;">
+        <div class="list_news">
+            <div class="col-lg-12 news_title">Tin Tức</div>
+            @if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-12 news_item">
+                        <div class="col-3 float-left">
+                            <img src="@item.Image" alt="@item.Name" width="170" />
+                        </div>
+                        <div class="col-lg-offset-1 float-left">
+                            <div class="news-title"><a href="/tin-tuc/chi-tiet/@item.MetaTitle-@item.ID">@item.Name</a></div>
+                            <div class="post-date">@item.CreatedDate | @item.CreatedBy</div>
+                            <div class="news-desciption">@Html.Raw(item.MetaDescriptions)</div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                }
+            }
+            else
+            {
+                <div class="clearfix"></div>
+                <div class="alert alert-info" style="margin-top: 30px;">Không có tin tức nào trong danh mục này!</div>
+            }
+        </div>
+    </div>
+
+</div>
+

@@ -18,18 +18,18 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public JsonResult LoadOrigin(int page, int pageSize)
+        public JsonResult LoadOrigin(int page, int pageSize,int typeOrigin)
         {
             OriginDAO dao = new OriginDAO();
-            var data = dao.LoadListOrigin().Skip((page - 1) * pageSize).Take(pageSize);
-            int totalRow = dao.LoadListOrigin().Count();
+            var data = dao.LoadListOrigin().Where(x => x.Type == typeOrigin).Skip((page - 1) * pageSize).Take(pageSize);
+            int totalRow = dao.LoadListOrigin().Where(x => x.Type == typeOrigin).Count();
             return Json(new { data = data, totalRowOrigin = totalRow, }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
-        public JsonResult LoadListOrigin()
+        public JsonResult LoadListOrigin(int type)
         {
             OriginDAO dao = new OriginDAO();
-            var data = dao.LoadListOrigin().Where(x => x.Status == true);
+            var data = dao.LoadListOrigin().Where(x => x.Status == true && x.Type == type);
             return Json(new { data = data }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]

@@ -287,4 +287,3 @@ var carCategoryController = {
         $('#createEditCarCategory').html("Thêm Mới");
     },
 }
-carCategoryController.init();

@@ -90,7 +90,9 @@ var carpartController = {
     loadListOrigin: function () {
         $.ajax({
             url: '/Admin/Origin/LoadListOrigin',
-            data: {},
+            data: {
+                type: originconfig.typeOrigin,
+            },
             type: 'GET',
             dataType: 'json',
             success: function (response) {
@@ -333,4 +335,3 @@ var carpartController = {
         return str = str.toString().replace(/,/g, "");
     }
 }
-carpartController.init();

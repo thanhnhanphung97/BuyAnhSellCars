@@ -156,5 +156,17 @@ namespace Model.DAO
             if (res.Count() == 0) return false;
             return true;
         }
+
+        public CarCategory GetParentNameByCategoryID(int categoryId)
+        {
+            var child = db.CarCategories.SingleOrDefault(x => x.ID == categoryId);
+            var parent = db.CarCategories.SingleOrDefault(x => x.ID == child.ParentID);
+            return parent;
+        }
+        public IEnumerable<CarCategory> GetListChildByCategoryID(int categoryID)
+        {
+            var listchild = db.CarCategories.Where(x => x.ParentID == categoryID);
+            return listchild;
+        }
     }
 }

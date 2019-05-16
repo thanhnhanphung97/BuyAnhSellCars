@@ -37,7 +37,8 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             Content content = serializer.Deserialize<Content>(strContent);
             content.MetaTitle = Common.convertToUnSign.convert(content.Name);
             content.Detail = (String)System.Net.WebUtility.HtmlDecode(content.Detail);
-            int result = dao.CreateEditContent(content, (string)Session[Common.CommonConstants.USER_NAME]);
+            //var userLogin = (UserLogin)Session[Common.CommonConstants.USER_NAME];
+            int result = dao.CreateEditContent(content, "admin");
             return Json(new { res = result });
         }
         [HttpGet]

@@ -3106,6 +3106,86 @@ select#selectCategoryID {
     padding: .5rem!important;
 }
 
+.card {
+    margin-top: -30px!important;
+}
+
+.profile-info {
+    width: 100%;
+    padding: 2% 10%;
+    background-color: #fff;
+    border:1px solid #888;
+    border-radius: 10px;
+}
+
+.profile-info > label {
+    border-left: 7px solid #007BFF;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 15px 0 20px -50px;
+}
+
+.profile-info > div {
+    font-size: 16px!important;
+}
+
+.profile-info > div > label {
+    float:left;
+    margin-bottom: 10px;
+    width: 30%;
+}
+
+.profile-info > div > span {
+    float:left;
+    font-style: italic!important;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.changePassword {
+    width: 70%;
+    float: left;
+    display: inline-block;
+    margin-top: -10px;
+}
+
+.changePassword input {
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.profile-sidebar {
+    background-color: #fff;
+    width: 80%;
+    height: 300px;
+    border: 1px solid #777;
+    border-radius: 10px;
+    padding: 5% 10%;
+    text-align:center;
+    margin-left: 30px;
+}
+
+#profile-username, #profile-group {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+#profile-group {
+    color: #003cff;
+}
+
+.profile-sidebar #profile-img img{
+    background-color: #fff;
+    background-repeat: no-repeat;
+    width: 200px;
+    height: 200px;
+    border: 1px solid #888;
+    border-radius: 50%;
+}
+
 
 /* media screen admin page*/
 
@@ -3272,6 +3352,9 @@ select#selectCategoryID {
     .btn-table {
         margin: 0.5px!important;
         float:left;
+    }
+    .profile-info > label {
+        margin-left: 0px;
     }
 }
 

@@ -29,7 +29,7 @@ namespace Model.EF
         [StringLength(50)]
         public string Email { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [StringLength(50)]
         public string CreatedBy { get; set; }
@@ -39,6 +39,10 @@ namespace Model.EF
         [StringLength(50)]
         public string ModifiedBy { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
+
+        public int Type { get; set; }
+
+        public int GroupID { get; set; }
     }
 }

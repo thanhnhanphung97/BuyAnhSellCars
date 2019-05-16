@@ -56,6 +56,7 @@ namespace Model.DAO
                          {
                              ID = a.ID,
                              Name = a.Name,
+                             MetaTitle = a.MetaTitle,
                              DisplayOrder = a.DisplayOrder,
                              CategoryChild = from b in db.CarPartCategories
                                              where b.ParentID == a.ID
@@ -64,6 +65,7 @@ namespace Model.DAO
                                              {
                                                  Id = b.ID,
                                                  Name = b.Name,
+                                                 MetaTitle = b.MetaTitle,
                                                  DisplayOrder = b.DisplayOrder,
                                                  Status = b.Status,
                                              },

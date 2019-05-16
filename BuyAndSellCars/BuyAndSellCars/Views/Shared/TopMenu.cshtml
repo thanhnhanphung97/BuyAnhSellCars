@@ -1,0 +1,22 @@
+﻿
+@{ 
+    var session = (UserLogin)Session[BuyAndSellCars.Common.LoginClientConstant.CLIENT_SESSION];
+}
+
+@if (session == null)
+{
+    <a href="/dang-nhap" class="nav-login"><i class="fa fa-user-circle-o" aria-hidden="true"></i><p>Đăng Nhập |</p></a>
+    <a href="/gio-hang" class="nav-login"><i class="fa fa-shopping-cart" aria-hidden="true"></i></a>
+}
+else
+{
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="username" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i><p>Chào,@session.Name <i class="fa fa-caret-down" aria-hidden="true"></i></p>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/gio-hang"><i class="fa fa-shopping-cart" aria-hidden="true"></i>Giỏ Hàng</a>
+            <a class="dropdown-item" href="/LoginClient/Logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Đăng Xuất</a>
+        </div>
+    </div>
+}

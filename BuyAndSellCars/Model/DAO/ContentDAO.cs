@@ -25,6 +25,7 @@ namespace Model.DAO
                         {
                             ID = a.ID,
                             Name = a.Name,
+                            MetaTitle = a.MetaTitle,
                             CreatedBy = a.CreatedBy,
                             CreatedDate = a.CreatedDate,
                             CategoryName = b.Name,
@@ -39,8 +40,8 @@ namespace Model.DAO
             {
                 entity.CreatedDate = DateTime.Now;
                 entity.ModifiedDate = DateTime.Now;
-                entity.CreatedBy = username;
-                entity.ModifiedBy = username;
+                entity.CreatedBy = username == "" ? "admin" : username;
+                entity.ModifiedBy = username == "" ? "admin" : username;
                 entity.ViewCount = 0;
                 db.Contents.Add(entity);
                 try
@@ -61,7 +62,7 @@ namespace Model.DAO
                 content.MetaTitle = entity.MetaTitle;
                 content.CategoryID = entity.CategoryID;
                 content.Detail = entity.Detail;
-                content.ModifiedBy = username;
+                content.ModifiedBy = username == "" ? "admin" : username;
                 content.ModifiedDate = DateTime.Now;
                 content.MetaKeywords = entity.MetaKeywords;
                 content.MetaDescriptions = entity.MetaDescriptions;
@@ -104,6 +105,18 @@ namespace Model.DAO
             entity.Status = !entity.Status;
             db.SaveChanges();
             return entity.Status;
+        }
+        public IEnumerable<Content> LoadContent()
+        {
+            return db.Contents.OrderByDescending(x => x.ID);
+        }
+        public IEnumerable<Content> GetAllContent()
+        {
+            return db.Contents.OrderByDescending(x => x.CreatedDate);
+        }
+        public IEnumerable<Content> GetContentByCategoryID(int id)
+        {
+            return db.Contents.Where(x => x.CategoryID == id).OrderByDescending(x => x.CreatedDate);
         }
     }
 }
