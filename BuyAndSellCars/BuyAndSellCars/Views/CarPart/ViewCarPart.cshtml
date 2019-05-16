@@ -1,0 +1,95 @@
+﻿@model Model.EF.CarPart
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listcategory = ViewBag.CarPartCategory;
+    var originname = ViewBag.OriginName;
+    var categoryName = ViewBag.CategoryName;
+    var manuname = ViewBag.ManuName;
+}
+
+@section scripts{
+    <script>
+        function moneyFormat(str) {
+            str = parseFloat(str.toString().replace(/,/g, "")).toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            return str;
+        };
+        $(document).ready(function () {
+            var price = $('.carpart-price span').html();
+            price = moneyFormat(price);
+            $('.carpart-price span').html(price + "đ");
+
+            var promotion = $('.carpart-price del').html();
+            promotion = moneyFormat(promotion);
+            $('.carpart-price del').html(promotion + "đ");
+        })
+    </script>
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/phu-tung/">Phụ Tùng</a></li>
+        <li><a href="/phu-tung/@categoryName.MetaTitle-@categoryName.ID">@categoryName.Name</a></li>
+    </ol>
+</div>
+
+<div class="container">
+    <div class="col-md-8 carpart-loca">
+        <div class="carpart-info">
+            <div class="col-md-5 carpart-img">
+                <img src="@Model.Image" alt="@Model.Name" />
+            </div>
+            <div class="col-md-5 info-detail">
+                <div class="carpart-name"><strong>Tên Sản Phẩm:</strong> @Model.Name</div>
+                <div class="carpart-code"><strong>Mã Code</strong>: @Model.Code</div>
+                @{
+                    var str = Model.PromotionPrice == -1 ? "<span>" + Model.Price + "</span>" : "<del>" + Model.Price + "đ</del>  <span> " + Model.PromotionPrice + "đ</span>";
+                }
+                <div class="carpart-price"><strong>Giá:</strong> @Html.Raw(str)</div>
+                <div class="carpart-origin"><strong>Xuất sứ</strong>: @originname.Name</div>
+                <div class="carpart-manu"><strong>Nhà Sản Xuất:</strong> @manuname.Name</div>
+                <div class="clearfix"></div>
+                <div class="carpart-warranty"><strong>Bảo Hành:</strong> @Model.Warranty Tháng</div>
+                <div class="add-cart">
+                    <div class="number-product">
+                        <label>Số Lượng: </label>
+                        <input type="number" value="1" />
+                    </div>
+                    <div class="btn btn-default btn-add-cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Thêm Vào Giỏ Hàng</div> 
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="carpart-descrip">
+            <div class="carpart-content">
+                <span>Mô Tả Sản Phẩm</span>
+                <div>
+                    @Html.Raw(Model.Description)
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 carpart-category">
+        <div class="menu-title">DANH MỤC PHỤ TÙNG</div>
+        <ul class="nav">
+            @foreach (var item in listcategory)
+            {
+                if (item.ID != 20)
+                {
+                    <li class="dropdown dropdown-menu-right">
+                        <a href="/phu-tung/@item.MetaTitle-@item.ID" class="dropdown-toggle" data-toggle="dropdown">@item.Name <i class="fa fa-sort-desc" aria-hidden="true" style="float:right"></i></a>
+                        <ul class="dropdown-menu">
+                            @foreach (var item_child in item.CategoryChild)
+                            {
+                                <li>
+                                    <a href="/phu-tung/@item_child.MetaTitle-@item_child.Id">@item_child.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</div>

@@ -240,5 +240,3 @@ var contentController = {
         });
     },
 }
-
-contentController.init();

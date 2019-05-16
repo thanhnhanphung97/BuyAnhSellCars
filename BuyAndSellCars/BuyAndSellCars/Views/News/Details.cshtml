@@ -1,0 +1,33 @@
+﻿@model Model.EF.Content
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var categoryCurrent = (Model.EF.NewsCategory)ViewBag.CategoryCurrent;
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/tin-tuc/tin-tuc-12">Tin Tức</a></li>
+        @if (categoryCurrent != null)
+        {
+            <li><a href="/tin-tuc/@categoryCurrent.MetaTitle-@categoryCurrent.ID">@categoryCurrent.Name</a></li>
+        }
+    </ol>
+</div>
+
+<div class="container">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="img-news-detail">
+            <img src="@Model.Image" width="500" />
+        </div>
+        <div class="news-detail-info">
+            @Html.Raw(Model.Detail)
+        </div>
+    </div>
+    <div class="col-lg-2"></div>
+    <div class="clearfix"></div>
+    <div class="col-lg-offset-7"><div class="post-date">@Model.CreatedDate | @Model.CreatedBy</div></div>
+</div>
+

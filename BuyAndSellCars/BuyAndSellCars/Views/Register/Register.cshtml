@@ -1,0 +1,90 @@
+﻿@model BuyAndSellCars.Models.Register
+
+@{
+    ViewBag.Title = "Đăng Ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/dang-ky">Đăng Ký</a></li>
+    </ol>
+</div>
+
+<div class="container form-register">
+    @using (Html.BeginForm("Register", "Register", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Đăng Ký</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @type = "email" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", @type = "number" })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control", @type = "password" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.CongfirmPassword, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.PasswordFor(model => model.CongfirmPassword, new { @class = "form-control", @type = "password" })
+                    @Html.ValidationMessageFor(model => model.CongfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-2">
+                    <input type="submit" value="Đăng Ký" class="btn btn-default" />
+                </div>
+                <div class="col-md-4" style="margin: 10px 0 0 -40px;">
+                    Đã có tài khoản? <a href="/dang-nhap">Đăng Nhập</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

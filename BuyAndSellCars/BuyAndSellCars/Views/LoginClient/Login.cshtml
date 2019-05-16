@@ -1,0 +1,53 @@
+﻿@model BuyAndSellCars.Models.LoginClientModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/dang-nhap">Đăng Nhập</a></li>
+    </ol>
+</div>
+
+<div class="container form_login">
+    @using (Html.BeginForm("Login", "LoginClient", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Đăng Nhập</h4>
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                <div class="col-md-4">
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-4">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-2">
+                    <input type="submit" value="Đăng Nhập" class="btn btn-default" />
+                </div>
+                <div class="col-md-4" style="margin: 10px 0 0 -40px;">
+                    Chưa có tài khoản? <a href="/dang-ky">Đăng Ký</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+

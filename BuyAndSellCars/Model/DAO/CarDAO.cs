@@ -184,5 +184,9 @@ namespace Model.DAO
                 return null;
             }
         }
+        public IEnumerable<Car> GetCarListByCategoryID(int categoryID)
+        {
+            return db.Cars.Where(x => x.CategoryID == categoryID);
+        }
     }
 }

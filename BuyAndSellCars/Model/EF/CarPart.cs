@@ -28,26 +28,26 @@ namespace Model.EF
         [StringLength(250)]
         public string Image { get; set; }
 
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
 
-        public decimal? PromotionPrice { get; set; }
+        public decimal PromotionPrice { get; set; }
 
-        public int? Quantity { get; set; }
+        public int Quantity { get; set; }
 
-        public long? CategoryID { get; set; }
+        public long CategoryID { get; set; }
 
-        public int? Warranty { get; set; }
+        public int Warranty { get; set; }
 
-        public int? OriginID { get; set; }
+        public int OriginID { get; set; }
 
-        public int? ManufacturerID { get; set; }
+        public int ManufacturerID { get; set; }
 
-        public DateTime? CreatedDate { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
@@ -58,6 +58,6 @@ namespace Model.EF
         [StringLength(250)]
         public string MetaDescriptions { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

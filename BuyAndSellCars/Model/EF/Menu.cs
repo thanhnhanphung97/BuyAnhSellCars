@@ -22,6 +22,6 @@ namespace Model.EF
         [StringLength(50)]
         public string Target { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

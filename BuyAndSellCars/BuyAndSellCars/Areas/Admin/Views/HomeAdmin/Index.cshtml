@@ -9,16 +9,19 @@
     <script src="/Assets/Admin/js/plugins/jquery.twbsPagination.min.js"></script>
 
     <script src="/Assets/Admin/js/controllers/userController.js"></script>
+    <script src="/Assets/Admin/js/controllers/originController.js"></script>
     <script src="/Assets/Admin/js/controllers/contentController.js"></script>
     <script src="/Assets/Admin/js/controllers/newsCategoryController.js"></script>
     <script src="/Assets/Admin/js/controllers/carpartCategoryController.js"></script>
     <script src="/Assets/Admin/js/controllers/carCategoryController.js"></script>
     <script src="/Assets/Admin/js/controllers/carpartController.js"></script>
     <script src="/Assets/Admin/js/controllers/carController.js"></script>
-    <script src="/Assets/Admin/js/controllers/originController.js"></script>
     <script src="/Assets/Admin/js/controllers/manufacturerController.js"></script>
     <script src="/Assets/Admin/js/controllers/homeCategoryController.js"></script>
     <script src="/Assets/Admin/js/controllers/salientController.js"></script>
+    <script src="/Assets/Admin/js/controllers/orderController.js"></script>
+    <script src="/Assets/Admin/js/controllers/groupManagerController.js"></script>
+    <script src="/Assets/Admin/js/controllers/displayInfo.js"></script>
     <script>
         var editor = CKEDITOR.replace('detailContent', {
             customConfig: '/Assets/Admin/js/plugins/ckeditor/config.js',
@@ -67,8 +70,13 @@
     </script>
 }
 
+@* Home Admin *@
+<div class="row dataset_admin" id="homeadmin_dataset">
+    <div style="padding: 27px 0 50px 15px;font-weight: 500;"><div class="alert alert-info" style="font-size: 17px;">Chào mừng bạn đến với hệ thống quản lý Website Buy And Sell Cars.</div></div>
+</div>
+
 @* Main Menu *@
-<div class="row" style="margin-bottom: 180px;" hidden>
+<div class="row dataset_admin" id="mainmenu_dataset" style="margin-bottom: 180px;">
     @* Form add - edit menu *@
     <div class="col-lg-4 pull-left add-edit-menu">
         <div class="col-12">
@@ -139,7 +147,7 @@
 </div>
 
 @* Users *@
-<div class="row" hidden>
+<div class="row dataset_admin" id="user_dataset">
     @* danh sách dữ liệu người dùng *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -221,6 +229,10 @@
                             <label for="mail"><strong>Email</strong></label>
                             <input type="email" class="form-control" id="mail" placeholder="abc@gmail.com" required />
                         </div>
+                        <div class="form-group">
+                            <label for="userGrpID"><strong>Nhóm Quyền</strong></label>
+                            <select class="form-control" id="userGrpID"></select>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -233,7 +245,7 @@
 </div>
 
 @* News - Content *@
-<div class="row" hidden>
+<div class="row dataset_admin" id="news_dataset">
     @* danh sách tin tức *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -270,7 +282,7 @@
                                 <td>{{ViewCount}}</td>
                                 <td><div data-id="{{ID}}" class="btn-status-content">{{{Status}}}</div></td>
                                 <td>
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content btn-table"><i class="ti-eye"></i> Xem</div>
+                                    @*<div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-content btn-table"><i class="ti-eye"></i> Xem</div>*@
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-content btn-table"><i class="fa fa-edit"></i> Sửa</div>
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-content btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
@@ -354,7 +366,7 @@
 </div>
 
 @*  News Categories  *@
-<div class="row" hidden>
+<div class="row dataset_admin" id="newscategory_dataset">
     @* Form add - edit news category *@
     <div class="col-lg-4 pull-left add-edit-menu">
         <div class="col-12">
@@ -436,7 +448,7 @@
 </div>
 
 @* Carpart Categories *@
-<div class="row">
+<div class="row dataset_admin" id="carpartcategory_dataset">
     @* Form add - edit news category *@
     <div class="col-lg-4 pull-left add-edit-menu">
         <div class="col-12">
@@ -518,7 +530,7 @@
 </div>
 
 @* CarPart - Product *@
-<div class="row">
+<div class="row dataset_admin" id="carpart_dataset">
     @* danh sách phụ tùng *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -559,7 +571,7 @@
                                 <td>{{Quantity}}</td>
                                 <td><div data-id="{{ID}}" class="btn-status-carpart">{{{Status}}}</div></td>
                                 <td style="min-width: 205px">
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-carpart btn-table"><i class="ti-eye"></i> Xem</div>
+                                    @*<div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-carpart btn-table"><i class="ti-eye"></i> Xem</div>*@
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-carpart btn-table"><i class="fa fa-edit"></i> Sửa</div>
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-carpart btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
@@ -686,7 +698,7 @@
 </div>
 
 @* Origin *@
-<div class="row">
+<div class="row dataset_admin" id="origin_dataset">
     @* danh sách dữ liệu Xuất sứ *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -761,7 +773,7 @@
 </div>
 
 @* Manufacturer *@
-<div class="row">
+<div class="row dataset_admin" id="manufacturer_dataset">
     @* danh sách dữ liệu Nhà Sản Xuất *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -836,7 +848,7 @@
 </div>
 
 @* Car Categories *@
-<div class="row" hidden>
+<div class="row dataset_admin" id="carcategory_dataset">
     @* Form add - edit news category *@
     <div class="col-lg-4 pull-left add-edit-menu">
         <div class="col-12">
@@ -918,7 +930,7 @@
 </div>
 
 @* Cars - Product *@
-<div class="row" hidden>
+<div class="row dataset_admin" id="car_dataset">
     @* danh sách ô tô *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -960,7 +972,7 @@
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-images-car btn-table"><i class="ti-image"></i> Hình Ảnh</div>
                                 </td>
                                 <td style="min-width: 205px">
-                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-car btn-table"><i class="ti-eye"></i> Xem</div>
+                                    @*<div data-id="{{ID}}" class="btn btn-xs btn-light btn-view-car btn-table"><i class="ti-eye"></i> Xem</div>*@
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-car btn-table"><i class="fa fa-edit"></i> Sửa</div>
                                     <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-car btn-table"><i class="ti-trash"></i> Xoá</div>
                                 </td>
@@ -1183,7 +1195,7 @@
 </div>
 
 @* Salient Feature *@
-<div class="row" hidden>
+<div class="row dataset_admin" id="salients_dataset">
     @* danh sách tính năng đặc biệt - car - product *@
     <div class="col-12 mt-5">
         <div class="card">
@@ -1257,3 +1269,315 @@
     </div>
 </div>
 
+@* Profile *@
+<div class="row dataset_admin" id="profile_dataset">
+    <div class="col-lg-4 col-md-6 mt-5">
+        <div class="pull-left profile-sidebar">
+            <div id="profile-img"><img src="/Assets/Admin/images/author/profile-img.png" /></div>
+            <div id="profile-username"></div>
+            <div id="profile-group"></div>
+        </div>
+    </div>
+    <div class="col-lg-8 col-md-6 mt-5">
+        <div class="pull-right profile-info">
+            <label>  Thông Tin Tài Khoản</label>
+            <div>
+                <label>ID:</label>
+                <span id="user-id"></span>
+                <div class="clearfix"></div>
+                <label>Email:</label>
+                <span id="user-email"></span>
+                <div class="clearfix"></div>
+                <label>Số Điện Thoại:</label>
+                <span id="user-phone"></span>
+                <div class="clearfix"></div>
+                <label>Địa Chỉ:</label>
+                <span id="user-address"></span>
+                <div class="clearfix"></div>
+            </div>
+            <label>  Thông Tin Cá Nhân</label>
+            <div>
+                <label>Tên Đăng Nhập</label>
+                <span id="user-username"></span>
+                <div class="clearfix"></div>
+                <label>Mật Khẩu</label>
+                <div class="changePassword">
+                    <input type="password" class="form-control" id="oldpassword" placeholder="Mật Khẩu Cũ" />
+                    <input type="password" class="form-control" id="newpassword" placeholder="Mật Khẩu Mới" />
+                    <input type="password" class="form-control" id="repeatpassword" placeholder="Nhập Lại Mật Khẩu Mới" />
+                    <input type="button" class="btn btn-light btn-xs" id="saveChangePassword" value="Lưu Mật Khẩu" /> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Order *@
+<div class="row dataset_admin" id="order_dataset">
+    @* danh sách đơn đặt hàng *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Đơn Đặt Hàng</h4>
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Ngày</th>
+                                    <th scope="col">Tên Người Mua</th>
+                                    <th scope="col">Số Điện Thoại</th>
+                                    <th scope="col">Địa Chỉ</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblOrder"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-order" class="pagination-md"></ul>
+                        </div>
+                        <script id="order-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{CreatedDate}}</td>
+                                <td>{{ShipName}}</td>
+                                <td>{{ShipMobile}}</td>
+                                <td>{{ShipAddress}}</td>
+                                <td>{{ShipEmail}}</td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-order btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Update - Order *@
+    <div class="modal fade bd-example-modal-lg" id="editOrderModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-content">Thông Tin Đơn Đặt Hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="idOrder" hidden="hidden" readonly="readonly" />
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="shipnameOrder"><strong>Tên Khách Hàng</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="shipnameOrder" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right" style="width:48%;">
+                            <label for="emailOrder"><strong>Email Khách Hàng</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="emailOrder" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="phoneOrder"><strong>SĐT Khách Hàng</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" maxlength="11" id="phoneOrder" onkeyup="this.value=this.value.replace(/[^\d]/,'')" required />
+                            </div>
+                        </div>
+                        <div class="form-group pull-right input-gp-select" style="width:48%;margin-top:30px;">
+                            <label for="categoryID"><strong>Trạng Thái </strong></label>
+                            <select id="selectStatus">
+                                <option value="0">Huỷ Đơn Hàng</option>
+                                <option value="1">Chờ Xử Lý</option>
+                                <option value="2">Đang Giao Hàng</option>
+                                <option value="3">Đã Giao Hàng</option>
+                            </select>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left" style="width:48%;">
+                            <label for="addressOrder"><strong>Địa Chỉ</strong></label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="addressOrder" required />
+                            </div>
+                        </div>
+                    </form>
+                    <div class="single-table">
+                        <div class="table-responsive">
+                            <table class="table table-hover progress-table text-center">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Mã SP</th>
+                                        <th scope="col">Tên SP</th>
+                                        <th scope="col">Hình Ảnh</th>
+                                        <th scope="col">Số Lượng</th>
+                                        <th scope="col">Đơn Giá</th>
+                                        <th scope="col">Thành Tiền</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tblOrderDetail"></tbody>
+                            </table>
+                            <script id="orderdetail-data" type="x-tmpl-mustache">
+                                <tr>
+                                    <td>{{ProductID}}</td>
+                                    <td>{{ProductName}}</td>
+                                    <td>{{{ProductImg}}}</td>
+                                    <td>{{Quantity}}</td>
+                                    <td>{{Price}}</td>
+                                    <td>{{TotalPrice}}</td>
+                                </tr>
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="editOrder">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Phân quyền *@
+<div class="row dataset_admin" id="decentralization_dataset">
+    @* danh sách nhóm quyền *@
+    <div class="col-12 mt-5">
+        <div class="card">
+            <div class="card-body">
+                <div class="col-md-12 clearfix">
+                    <h4 class="header-title pull-left">Danh Sách Nhóm Quyền</h4>
+                    <input type="button" class="btn btn-light btn-add-location pull-right" id="btnCreateGroupManager" value="Thêm Mới" />
+                </div>
+                <div class="single-table">
+                    <div class="table-responsive">
+                        <table class="table table-hover progress-table text-center">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Tên Nhóm</th>
+                                    <th scope="col">Mô Tả</th>
+                                    <th scope="col">Phân Quyền</th>
+                                    <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tblGroupManager"></tbody>
+                        </table>
+                        <div class="pull-right" style="margin-top: 30px;">
+                            <ul id="pagination-grpmanager" class="pagination-md"></ul>
+                        </div>
+                        <script id="grpmanager-data" type="x-tmpl-mustache">
+                            <tr>
+                                <td>{{ID}}</td>
+                                <td>{{Name}}</td>
+                                <td>{{Description}}</td>
+                                <td>
+                                    <div data-id="{{DecenID}}" class="btn btn-xs btn-light btn-decen-grpmanager btn-table"><i class="fa fa-users" aria-hidden="true"></i> Phân Quyền</div>
+                                </td>
+                                <td>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-edit-grpmanager btn-table"><i class="fa fa-edit"></i> Sửa</div>
+                                    <div data-id="{{ID}}" class="btn btn-xs btn-light btn-delete-grpmanager btn-table"><i class="ti-trash"></i> Xoá</div>
+                                </td>
+                            </tr>
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal add - update user *@
+    <div class="modal fade" id="createEditGroupManagerModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-grpmanager">Thêm Mới Nhóm Quyền</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="namegrpmanager"><strong>Tên Nhóm Quyền</strong></label>
+                            <input type="text" class="form-control" id="namegrpmanager" required />
+                            <input type="hidden" id="hidIdGrpManager" value="0" />
+                        </div>
+                        <div class="form-group">
+                            <label for="descriptionGrpManager"><strong>Mô Tả</strong></label>
+                            <input type="text" class="form-control" id="descriptionGrpManager" required />
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="createEditGrpManager">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @* Modal Phân quyền *@
+    <div class="modal fade bd-example-modal-lg" id="managerDecentralizationModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="title-group">Phân Quyền Quản Lý</h5>
+                    <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="idDecent" hidden="hidden" readonly="readonly" />
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left col-lg-4">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="userManager" />
+                                <label class="custom-control-label" for="userManager"><strong>Quản Lý TK Người Dùng </strong></label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left col-lg-4">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="carpartManager" />
+                                <label class="custom-control-label" for="carpartManager"><strong>Quản Lý Phụ Tùng </strong></label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left col-lg-4">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="carManager" />
+                                <label class="custom-control-label" for="carManager"><strong>Quản Lý Xe Ô Tô </strong></label>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="form-group pull-left col-lg-4">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="orderManager" />
+                                <label class="custom-control-label" for="orderManager"><strong>Quản Lý Đơn Hàng </strong></label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left col-lg-4">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="newsManager" />
+                                <label class="custom-control-label" for="newsManager"><strong>Quản Lý Tin Tức </strong></label>
+                            </div>
+                        </div>
+                        <div class="form-group pull-left col-lg-4">
+                            <div class="custom-control custom-checkbox custom-control-inline custom-checkbox-admin">
+                                <input type="checkbox" class="custom-control-input" id="systemManager" />
+                                <label class="custom-control-label" for="systemManager"><strong>Quản Lý Hệ Thống </strong></label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary" id="btnSaveDecent">Lưu Thay Đổi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

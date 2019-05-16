@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section slides {
+    <div class="slider-contact">
+        <img src="/Assets/Clients/images/contact-us-banner.jpg" style="width: 100%;height:auto;" />
+    </div>
+}
+
+@section scripts {
+    <script>
+        $('#btncontact').off('click').on('click', function () {
+            var name = $('#name').val();
+            var phone = $('#phone').val();
+            var email = $('#email').val();
+            var content = $('#content').val();
+            if (name != "" && phone != "" && email != "" && content != "") {
+                var feedback = {
+                    Name: name,
+                    Phone: phone,
+                    Email: email,
+                    Content: content
+                }
+                $.ajax({
+                    url: '/FeedBack/FeedBack',
+                    data: {
+                        strFeedback: JSON.stringify(feedback),
+                    },
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.res == true) {
+                            $('#messenger').modal('show');
+                            $('#name').val("");
+                            $('#phone').val("");
+                            $('#email').val("");
+                            $('#content').val("");
+                            setTimeout(function () { $('#messenger').modal('hide'); }, 2000);
+                        }
+                    },
+                });
+            }
+
+
+        });
+    </script>    
+}
+
+<div class="container form-contact">
+    <div class="col-md-7">
+        <form>
+            <div class="contact-title">
+                <h3>Liên Hệ Với Chúng Tôi</h3>
+                <span>Vui lòng điền vào form dưới đây và chúng tôi sẽ liên hệ với bạn sớm nhất có thể</span>
+            </div>
+            <div class="contact-input">
+                <input type="text" id="name" placeholder="Họ và tên" required />
+            </div>
+            <div class="clearfix"></div>
+            <div class="contact-input">
+                <div class="input-left">
+                    <input type="number" id="phone" placeholder="Số điện thoại" required />
+                </div>
+                <div class="input-left">
+                    <input type="email" id="email" placeholder="Email" required />
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="contact-input">
+                <textarea id="content" placeholder="Nội dung" required></textarea>
+            </div>
+            <div class="btn btn-info" id="btncontact">Gửi liên lạc</div>
+        </form>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="contact-info">
+            <div class="contact-item">
+                <span>Liên hệ với chúng tôi để được hỗ trợ tư vấn qua email: <span style="color:blue;">info@bascars.vn</span></span>
+            </div>
+            <div class="contact-item">
+                <h4>Địa chỉ liên hệ</h4>
+                <span>176/5 DT745, Đường CMT8, Thuận An, Bình Dương</span>
+            </div>
+            <div class="contact-item">
+                <div style="font-size: 15px;"><strong>Hotline<span style="color:red;"> 1800 6261</span></strong></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal fade" id="messenger" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" style="border-radius: 10px;padding: 10px;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông báo</h5>
+                </div>
+                <div class="modal-body">
+                    <span style="text-align:center;"><i class="fa fa-check" style="color:greenyellow; font-size: 16px;" aria-hidden="true"></i>Cám ơn bạn đã để lại thông tin. Chúng tôi sẽ liên hệ bạn sớm nhất có thể!</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

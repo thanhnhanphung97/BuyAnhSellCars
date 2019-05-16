@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listcategory = ViewBag.CarPartCategory;
+}
+
+<div class="direc_bottom_header">
+    <ol class="breadcrumb">
+        <li><a href="javascript:void(0)" style="color:#333;">Trang Chủ</a></li>
+        <li><a href="/gio-hang/">Giỏ Hàng</a></li>
+    </ol>
+</div>
+<div class="clearfix"></div>
+
+<div class="container">
+    <div class="col-md-4 carpart-category">
+        <div class="menu-title">DANH MỤC PHỤ TÙNG</div>
+        <ul class="nav">
+            @foreach (var item in listcategory)
+            {
+                if (item.ID != 20)
+                {
+                    <li class="dropdown dropdown-menu-right">
+                        <a href="/phu-tung/@item.MetaTitle-@item.ID" class="dropdown-toggle" data-toggle="dropdown">@item.Name <i class="fa fa-sort-desc" aria-hidden="true" style="float:right"></i></a>
+                        <ul class="dropdown-menu">
+                            @foreach (var item_child in item.CategoryChild)
+                            {
+                                <li>
+                                    <a href="/phu-tung/@item_child.MetaTitle-@item_child.Id">@item_child.Name</a>
+                                </li>
+                            }
+                        </ul>
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+    <div class="col-md-8" style="padding:30px 250px 0 0;font-size:16px;">
+        <div class="alert alert-success" ><strong>Bạn vừa mua hàng thành công!</strong></div>
+    </div>
+</div>
+

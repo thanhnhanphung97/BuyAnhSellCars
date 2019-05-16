@@ -26,9 +26,9 @@ namespace Model.DAO
         {
             return db.Users.SingleOrDefault(x => x.ID == Id);
         }
-        public int Login(string userName,string password)
+        public int Login(string userName,string password,int type)
         {
-            var result = db.Users.SingleOrDefault(x => x.UserName == userName);
+            var result = db.Users.SingleOrDefault(x => x.UserName == userName && x.Type == type);
             if (result == null) return 0;
             else if (result.Status == false) return -1;
             else if (result.Password == password) return 1;
@@ -103,6 +103,20 @@ namespace Model.DAO
             catch (Exception)
             {
                 throw;
+            }
+        }
+        public int changePassword(int Id, string newPass)
+        {
+            User entity = db.Users.Find(Id);
+            entity.Password = newPass;
+            try
+            {
+                db.SaveChanges();
+                return 1;
+            }
+            catch (Exception)
+            {
+                return 0;
             }
         }
     }

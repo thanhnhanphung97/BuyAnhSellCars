@@ -11,56 +11,9 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
         // GET: Admin/Home
         public ActionResult Index()
         {
+            ViewBag.Name = (string)Session[Common.CommonConstants.USER_NAME];
             return View();
         }
-        // users
-        [HttpGet]
-        public JsonResult LoadUserData(int page, int pageSize = 10)
-        {
-            var dao = new UserDAO();
-            var listUser = dao.GetListUser().Skip((page - 1) * pageSize).Take(pageSize);
-            int totalRow = dao.GetListUser().Count();
-            return Json(new
-            {
-                data = listUser,
-                totalRowUser = totalRow
-            }, JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult CreateEditUser(string strUser)
-        {
-            var dao = new UserDAO();
-            JavaScriptSerializer serializer = new JavaScriptSerializer();
-            User user = serializer.Deserialize<User>(strUser);
-            user.Password = Common.Encryptor.MD5Hash(user.Password);
-            int result = dao.CreateEditUser(user, (string)Session[Common.CommonConstants.USER_NAME]);
-            return Json(new { messenge = result });
-        }
-        [HttpGet]
-        public JsonResult LoadUserDetail(int Id)
-        {
-            var dao = new UserDAO();
-            User user = dao.GetById(Id);
-            return Json(new {
-                data = user
-            },JsonRequestBehavior.AllowGet);
-        }
-        [HttpPost]
-        public JsonResult DeleteUser(int Id)
-        {
-            var dao = new UserDAO();
-            bool result = dao.DeleteUser(Id);
-            return Json(new { status = result });
-        }
-        [HttpPost]
-        public JsonResult ChangeStatus(long Id)
-        {
-            var dao = new UserDAO();
-            bool? result = dao.ChangeStatus(Id);
-            return Json(new
-            {
-                res = result
-            });
-        }
+        
     }
 }

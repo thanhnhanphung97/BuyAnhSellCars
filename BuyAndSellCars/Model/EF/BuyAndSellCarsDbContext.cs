@@ -12,39 +12,27 @@ namespace Model.EF
         {
         }
 
-        public virtual DbSet<About> Abouts { get; set; }
         public virtual DbSet<Car> Cars { get; set; }
         public virtual DbSet<CarCategory> CarCategories { get; set; }
         public virtual DbSet<CarPart> CarParts { get; set; }
-        public virtual DbSet<Contact> Contacts { get; set; }
         public virtual DbSet<Content> Contents { get; set; }
-        public virtual DbSet<ContentTag> ContentTags { get; set; }
+        public virtual DbSet<Decentralization> Decentralizations { get; set; }
         public virtual DbSet<Feedback> Feedbacks { get; set; }
         public virtual DbSet<Footer> Footers { get; set; }
         public virtual DbSet<Manufacturer> Manufacturers { get; set; }
+        public virtual DbSet<MemberGroup> MemberGroups { get; set; }
         public virtual DbSet<Menu> Menus { get; set; }
         public virtual DbSet<NewsCategory> NewsCategories { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Origin> Origins { get; set; }
         public virtual DbSet<SalientFeature> SalientFeatures { get; set; }
         public virtual DbSet<SystemConfig> SystemConfigs { get; set; }
-        public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<CarPartCategory> CarPartCategories { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<About>()
-                .Property(e => e.MetaTitle)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<About>()
-                .Property(e => e.CreatedBy)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<About>()
-                .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Car>()
                 .Property(e => e.MetaTitle)
                 .IsUnicode(false);
@@ -117,10 +105,6 @@ namespace Model.EF
                 .Property(e => e.ModifiedBy)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<ContentTag>()
-                .Property(e => e.TagID)
-                .IsUnicode(false);
-
             modelBuilder.Entity<Footer>()
                 .Property(e => e.ID)
                 .IsUnicode(false);
@@ -145,16 +129,20 @@ namespace Model.EF
                 .Property(e => e.ModifiedBy)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<Order>()
+                .Property(e => e.ShipMobile)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<OrderDetail>()
+                .Property(e => e.Price)
+                .HasPrecision(18, 0);
+
             modelBuilder.Entity<Origin>()
                 .Property(e => e.CreatedBy)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Origin>()
                 .Property(e => e.ModifiedBy)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Tag>()
-                .Property(e => e.ID)
                 .IsUnicode(false);
 
             modelBuilder.Entity<User>()

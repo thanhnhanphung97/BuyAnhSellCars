@@ -1,6 +1,7 @@
 ﻿var originconfig = {
     pageIndex: 1,
     pageSize: 10,
+    typeOrigin: 1,
 }
 
 var originController = {
@@ -45,10 +46,11 @@ var originController = {
     },
     loadOrigin: function () {
         $.ajax({
-            url: '/Origin/LoadOrigin',
+            url: '/Admin/Origin/LoadOrigin',
             data: {
                 page: originconfig.pageIndex,
                 pageSize: originconfig.pageSize,
+                typeOrigin: originconfig.typeOrigin,
             },
             type: 'GET',
             dataType: 'json',
@@ -67,7 +69,7 @@ var originController = {
                     $('#tblOrigin').html(html);
                     if (response.totalRowOrigin > 0) {
                         originController.pagingOrigin(response.totalRowOrigin, function () {
-                            originController.loadOrigin(originconfig.pageIndex, originconfig.pageSize);
+                            originController.loadOrigin(originconfig.pageIndex, originconfig.pageSize, originconfig.typeOrigin);
                         })
                     }
                     originController.registerEvents();
@@ -77,7 +79,7 @@ var originController = {
     },
     loadOriginById: function (id) {
         $.ajax({
-            url: '/Origin/GetOriginById',
+            url: '/Admin/Origin/GetOriginById',
             data: {
                 Id: id,
             },
@@ -99,9 +101,10 @@ var originController = {
             ID: id,
             Name: name,
             Status: status,
+            Type: originconfig.typeOrigin,
         };
         $.ajax({
-            url: '/Origin/CreateEditOrigin',
+            url: '/Admin/Origin/CreateEditOrigin',
             data: {
                 strOrigin: JSON.stringify(Origin),
             },
@@ -127,7 +130,7 @@ var originController = {
     },
     deleteOrigin: function (id) {
         $.ajax({
-            url: '/Origin/DeleteOrigin',
+            url: '/Admin/Origin/DeleteOrigin',
             data: {
                 Id: id,
             },
@@ -150,7 +153,7 @@ var originController = {
     },
     changeStatusOrigin: function (id, btn) {
         $.ajax({
-            url: '/Origin/ChangeStatus',
+            url: '/Admin/Origin/ChangeStatus',
             data: {
                 Id: id,
             },
@@ -205,5 +208,3 @@ var originController = {
         });
     },
 }
-
-originController.init();

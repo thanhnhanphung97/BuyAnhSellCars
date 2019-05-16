@@ -201,5 +201,3 @@ var salientController = {
         }, 200);
     },
 }
-
-salientController.init();

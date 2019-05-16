@@ -1,0 +1,205 @@
+﻿@{
+    ViewBag.Title = "Hệ thống mua bán xe ôtô cũ | BaSCars";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var carlist = (IEnumerable<Model.EF.Car>)ViewBag.CarList;
+    var newslist = (IEnumerable<Model.EF.Content>)ViewBag.ContentList;
+    var carcategory = (IEnumerable<Model.EF.CarCategory>)ViewBag.CarCategory;
+}
+
+@section slides{
+<div class="slider">
+    <div class="callbacks_container">
+        <ul class="rslides" id="slider">
+            <li>
+                <div class="w3layouts-banner-top w3layouts-banner-top1">
+                    <div class="banner-dott">
+                        <div class="container">
+                            <div class="slider-info">
+                                <div class="col-md-12">
+                                    <h3>Tìm Xe Ô Tô</h3>
+                                    <div class="searchForm">
+                                        @using (Html.BeginForm("SearchCar", "SearchCar", FormMethod.Post, new { @class = "form-search" }))
+                                        {
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <select name="selectCarCategory" id="selectCarCategory" class="pull-left" style="width: 100%;">
+                                                        <option value="0" selected>Chọn Hãng Xe (Honda, Toyota,...)</option>
+                                                        @foreach (var item in carcategory)
+	                                                    {
+		                                                     <option value="@item.ID">@item.Name</option>
+	                                                    }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <select name="selectCarCategoryChild" id="selectCarCategoryChild" class="pull-left" style="width: 100%;">
+                                                        <option value="0" selected>Chọn Mẫu Xe (Vios, City,...)</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <select name="selectPrice" id="selectPrice" class="pull-left" style="width: 100%;">
+                                                        <option value="0" selected>Khoảng Giá</option>
+                                                        <option value="1">Từ 300 - 500 triệu</option>
+                                                        <option value="2">Từ 500 - 700 triệu</option>
+                                                        <option value="3">Từ 700 - 900 triệu</option>
+                                                        <option value="4">Từ 900 - 1 tỷ</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 search-location">
+                                                <button type="submit" class="btn btn-light btn-search"><i class="fa fa-search" aria-hidden="true"></i> TÌM MUA XE</button>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfix"></div>
+</div>
+}
+
+@section scripts{
+    <script>
+        $('#selectCarCategory').on('change', function () {
+            var carcategory = parseInt($('#selectCarCategory').val());
+            if (carcategory == 0) {
+                $('#selectCarCategoryChild').html('');
+                $('#selectCarCategoryChild').append($('<option>', { value: 0, text: 'Chọn Mẫu Xe (Vios, City,...)' }));
+            }
+            else {
+                $.ajax({
+                    url: '/Home/GetCategoryChild',
+                    data: { categoryId: carcategory, },
+                    type: 'GET',
+                    dataType: 'json',
+                    success: function (response) {
+                        var data = response.data;
+                        if (data != "") {
+                            $('#selectCarCategoryChild').html('');
+                            $.each(data, function (i, item) {
+                                $('#selectCarCategoryChild').append($('<option>', { value: item.ID, text: item.Name }));
+                            });
+                        }
+                        else {
+                            $('#selectCarCategoryChild').html('');
+                            $('#selectCarCategoryChild').append($('<option>', { value: 0, text: 'Chưa Cập Nhật' }));
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+}
+
+<!-- team -->
+<div class="team" id="team">
+    <div class="container">
+        <div class="heading">
+            <h3>Xe Mới Về</h3>
+        </div>
+        @foreach (var item in carlist)
+        {
+            <div class="col-md-3 wthree_team_grid">
+                <div class="hovereffect">
+                    <img src="@item.Image" alt="" class="img-responsive" />
+                    <a href="/xe-oto/@item.MetaTitle-@item.ID"><h4 data-id="@item.ID">@item.Name</h4></a>
+                    <div class="car-info">
+                        <p>@item.YearOfManufacture|@item.KmTraveled Km|@item.CarColor|@item.Gear</p>
+                    </div>
+                    <div>
+                        @{
+                            var price = item.Price.ToString().Length;
+                            var prepay = item.PrePay.ToString().Length;
+                        }
+                        <div style="float:left;width:38%;font-size: 11px;"><p><span style="font-size:17px;color:red;font-weight:800;">@item.Price.ToString().Remove(price - 6)</span> Triệu</p></div>
+                        <div style="float:left;width:60%;font-size: 11px;margin-top: 5px;"><p>$Trả trước @item.PrePay.ToString().Remove(prepay - 6) Triệu</p></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="clearfix"> </div>
+<!-- //team -->
+
+<!-- Counter -->
+<div class="container" style="padding: 0 1%;">
+    <div class="col-md-12 services-bottom" style="box-sizing:border-box;">
+        <div class="col-md-3 agileits_w3layouts_about_counter_left">
+            <div class="countericon">
+                <i class="fa fa-car" aria-hidden="true"></i>
+            </div>
+            <div class="counterinfo">
+                <p class="counter">200+</p>
+                <h3>Xe Tồn Kho</h3>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-3 agileits_w3layouts_about_counter_left">
+            <div class="countericon">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="counterinfo">
+                <p class="counter">300+</p>
+                <h3>Khách Hàng</h3>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-3 agileits_w3layouts_about_counter_left">
+            <div class="countericon">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <div class="counterinfo">
+                <p class="counter">5+</p>
+                <h3>Năm Kinh Nghiệm</h3>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-3 agileits_w3layouts_about_counter_left">
+            <div class="countericon">
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="counterinfo">
+                <p class="counter">200+</p>
+                <h3>Khách Hàng Vừa Lòng</h3>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<div class="clearfix"> </div>
+<!-- //Counter -->
+
+<!-- our blog -->
+<section class="blog" id="blog">
+    <div class="container">
+        <div class="heading">
+            <h3>Tin Mới Nhất</h3>
+        </div>
+        <div class="blog-grids">
+            @foreach (var item in newslist)
+            {
+                <div class="col-md-3 blog-grid">
+                    <a href="/tin-tuc/chi-tiet/@item.MetaTitle-@item.ID" data-toggle="modal" data-target="#myModal"><img src="@item.Image" alt="" /></a>
+                    <h5>@item.ModifiedDate</h5>
+                    <h4><a href="/tin-tuc/chi-tiet/@item.MetaTitle-@item.ID">@item.Name</a></h4>
+                    <p> @item.MetaDescriptions</p>
+                    <div class="readmore-w3">
+                        <a class="readmore" href="/tin-tuc/chi-tiet/@item.MetaTitle-@item.ID">Xem Tin Tức</a>
+                    </div>
+                </div>
+            }
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</section>
+<!-- //our blog -->

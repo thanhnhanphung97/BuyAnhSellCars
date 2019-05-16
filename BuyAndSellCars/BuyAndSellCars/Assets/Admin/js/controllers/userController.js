@@ -1,11 +1,13 @@
 ﻿var userconfig = {
     pageIndex: 1,
     pageSize: 10,
+    typeAccount: 1,
 }
 
 var userController = {
     init: function () {
         userController.loadUser();
+        userController.loadMemberGrp();
         userController.setFormatToastr();
         userController.registerEvents();
     },
@@ -56,11 +58,12 @@ var userController = {
     },
     loadUser: function () {
         $.ajax({
-            url: '/HomeAdmin/LoadUserData',
+            url: '/User/LoadUserData',
             type: 'GET',
             data: {
                 page: userconfig.pageIndex,
-                pageSize: userconfig.pageSize
+                pageSize: userconfig.pageSize,
+                typeAccount: userconfig.typeAccount,
             },
             dataType: 'json',
             success: function (response) {
@@ -81,7 +84,7 @@ var userController = {
                 });
                 $('#tblUser').html(html);
                 userController.pagingUser(response.totalRowUser, function () {
-                    userController.loadUser(userconfig.pageIndex, userconfig.pageSize);
+                    userController.loadUser(userconfig.pageIndex, userconfig.pageSize, userconfig.typeAccount);
                 })
                 userController.registerEvents();
             }
@@ -109,6 +112,7 @@ var userController = {
         var phone = $('#phone').val();
         var address = $('#address').val();
         var mail = $('#mail').val();
+        var type = userconfig.typeAccount;
         var user = {
             ID: id,
             UserName: userName,
@@ -116,10 +120,11 @@ var userController = {
             Name: name,
             Address: address,
             Phone: phone,
-            Email: mail
+            Email: mail,
+            Type: type,
         }
         $.ajax({
-            url: '/HomeAdmin/CreateEditUser',
+            url: '/User/CreateEditUser',
             data: {
                 strUser : JSON.stringify(user)
             },
@@ -138,9 +143,10 @@ var userController = {
             }
         })
     },
-    loadUserDetail: function(id){
+    loadUserDetail: function (id) {
+        userController.loadMemberGrp();
         $.ajax({
-            url: '/HomeAdmin/LoadUserDetail',
+            url: '/User/LoadUserDetail',
             data: {
                 Id: id
             },
@@ -154,12 +160,13 @@ var userController = {
                 $('#phone').val(data.Phone);
                 $('#address').val(data.Address);
                 $('#mail').val(data.Email);
+                $('#membergrp').val(data.GroupID);
             }
         })
     },
     deleteUser: function(id){
         $.ajax({
-            url: '/HomeAdmin/DeleteUser',
+            url: '/User/DeleteUser',
             data:{
                 Id: id
             },
@@ -177,7 +184,7 @@ var userController = {
     },
     changeStatus: function(id,btn){
         $.ajax({
-            url: '/HomeAdmin/ChangeStatus',
+            url: '/User/ChangeStatus',
             data: {
                 Id: id
             },
@@ -219,6 +226,20 @@ var userController = {
     validateEmail: function (email) {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
+    },
+    loadMemberGrp: function () {
+        $('select#userGrpID').html('');
+        $.ajax({
+            url: '/Admin/User/GetMemberGroup',
+            data: {},
+            type: 'GET',
+            dataType: 'json',
+            success: function (response) {
+                var data = response.data;
+                $.each(data, function (i, item) {
+                    $('select#userGrpID').append($('<option>', { value: item.ID, text: item.Name }));
+                })
+            },
+        });
     }
 };
-userController.init();

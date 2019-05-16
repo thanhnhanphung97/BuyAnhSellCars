@@ -20,6 +20,6 @@ namespace Model.EF
         [StringLength(250)]
         public string Value { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -19,11 +19,13 @@ namespace Model.EF
         [StringLength(50)]
         public string CreatedBy { get; set; }
 
-        public DateTime? ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
 
         [StringLength(50)]
         public string ModifiedBy { get; set; }
 
-        public bool? Status { get; set; }
+        public bool Status { get; set; }
+
+        public int Type { get; set; }
     }
 }

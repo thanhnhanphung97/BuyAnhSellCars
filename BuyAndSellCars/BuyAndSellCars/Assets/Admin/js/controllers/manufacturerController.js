@@ -158,7 +158,7 @@ var manufacturerController = {
             dataType: 'json',
             success: function (response) {
                 if (response.used == false) {
-                    var html = response.res == true ? "<div class='btn btn-rounded btn-success btn-table'><i class='fa fa-unlock-alt' aria-hidden='true'> Hiển Thị</i></div>" : "<div class='btn btn-rounded btn-secondary btn-table'><i class='fa fa-lock' aria-hidden='true'> Khoá</i></div>"
+                    var html = response.res == true ? "<div class='btn btn-rounded btn-success btn-table'><i class='fa fa-unlock-alt' aria-hidden='true'></i></div>" : "<div class='btn btn-rounded btn-secondary btn-table'><i class='fa fa-lock' aria-hidden='true'></i></div>"
                     btn.html(html);
                 }
                 else toastr.warning("Bản ghi này đang được sử dụng trong Danh Sách Phụ Tùng hoặc Ôtô!", "Warning");
@@ -205,4 +205,3 @@ var manufacturerController = {
         });
     },
 }
-manufacturerController.init();

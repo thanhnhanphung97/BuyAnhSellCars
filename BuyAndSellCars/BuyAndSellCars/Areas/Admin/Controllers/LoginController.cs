@@ -14,6 +14,7 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
         // GET: Admin/Login
         public ActionResult Index()
         {
+            Session.Add(CommonConstants.USER_SESSION, null);
             return View();
         }
         public ActionResult Login(LoginModel model)
@@ -21,7 +22,7 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var dao = new UserDAO();
-                int result = dao.Login(model.UserName, Encryptor.MD5Hash(model.Password));
+                int result = dao.Login(model.UserName, Encryptor.MD5Hash(model.Password),1);
                 if (result == 0) ModelState.AddModelError("", "Tài khoản không tồn tại.");
                 else if (result == -1) ModelState.AddModelError("", "Tài khoản đang bị khoá.");
                 else if (result == 1)
@@ -31,7 +32,6 @@ namespace BuyAndSellCars.Areas.Admin.Controllers
                     userSession.UserName = user.UserName;
                     userSession.UserID = user.ID;
                     Session.Add(CommonConstants.USER_SESSION, userSession);
-                    Session.Add(CommonConstants.USER_NAME, model.UserName);
                     return RedirectToAction("Index", "HomeAdmin");
                 }
                 else ModelState.AddModelError("", "Thông tin đăng nhập không chính xác.");

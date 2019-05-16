@@ -249,7 +249,7 @@ var newsCategoryController = {
             dataTyp: 'json',
             success: function (response) {
                 if (response.used == false) {
-                    var html = response.res == true ? "<div class='btn btn-rounded btn-success btn-table'><i class='fa fa-unlock-alt' aria-hidden='true'> Kích Hoạt</i></div>" : "<div class='btn btn-rounded btn-secondary btn-table'><i class='fa fa-lock' aria-hidden='true'> Khoá</i></div>"
+                    var html = response.res == true ? "<div class='btn btn-rounded btn-success btn-table'><i class='fa fa-unlock-alt' aria-hidden='true'></i></div>" : "<div class='btn btn-rounded btn-secondary btn-table'><i class='fa fa-lock' aria-hidden='true'></i></div>"
                     btn.html(html);
                 }
                 else toastr.warning("Còn Tin Tức Tồn Tại Trong Danh Mục Này!", "Warning");
@@ -305,4 +305,3 @@ var newsCategoryController = {
         $('#createEditNewsCategory').html("Thêm Mới");
     },
 }
-newsCategoryController.init();

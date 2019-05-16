@@ -109,5 +109,10 @@ namespace Model.DAO
             db.SaveChanges();
             return entity.Status;
         }
+
+        public IEnumerable<CarPart> GetCarPartByCategoryID(IEnumerable<CarPart> entity,int id)
+        {
+            return entity.Where(x => x.CategoryID == id);
+        }
     }
 }

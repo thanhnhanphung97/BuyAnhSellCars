@@ -11,6 +11,7 @@ namespace Model.ViewModel
     {
         public long ID { get; set; }
         public string Name { get; set; }
+        public string MetaTitle { get; set; }
         public IEnumerable<NewsCategoryChild> CategoryChild { get; set; }
         public int? DisplayOrder { get; set; }
         public bool? Status { get; set; }

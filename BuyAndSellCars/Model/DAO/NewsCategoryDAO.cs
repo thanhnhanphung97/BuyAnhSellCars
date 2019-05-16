@@ -56,6 +56,7 @@ namespace Model.DAO
                          {
                              ID = a.ID,
                              Name = a.Name,
+                             MetaTitle = a.MetaTitle,
                              DisplayOrder = a.DisplayOrder,
                              CategoryChild = from b in db.NewsCategories
                                              where b.ParentID == a.ID
@@ -64,6 +65,7 @@ namespace Model.DAO
                                              {
                                                  Id = b.ID,
                                                  Name = b.Name,
+                                                 MetaTitle = b.MetaTitle,
                                                  DisplayOrder = b.DisplayOrder,
                                                  Status = b.Status,
                                              },
@@ -156,6 +158,31 @@ namespace Model.DAO
             IEnumerable<Content> res = db.Contents.Where(x => x.CategoryID == Id);
             if (res.Count() == 0) return false;
             return true;
+        }
+        public IEnumerable<ViewNewsCategoryModel> NewsCategoryClient()
+        {
+            var entity = from a in db.NewsCategories
+                         where a.ParentID == 0 && a.Status == true
+                         select new ViewNewsCategoryModel()
+                         {
+                             ID = a.ID,
+                             Name = a.Name,
+                             MetaTitle = a.MetaTitle,
+                             DisplayOrder = a.DisplayOrder,
+                             CategoryChild = from b in db.NewsCategories
+                                             where b.ParentID == a.ID && b.Status == true
+                                             orderby b.DisplayOrder
+                                             select new NewsCategoryChild()
+                                             {
+                                                 Id = b.ID,
+                                                 Name = b.Name,
+                                                 MetaTitle = b.MetaTitle,
+                                                 DisplayOrder = b.DisplayOrder,
+                                                 Status = b.Status,
+                                             },
+                             Status = a.Status
+                         };
+            return entity.OrderBy(x => x.DisplayOrder);
         }
     }
 }
