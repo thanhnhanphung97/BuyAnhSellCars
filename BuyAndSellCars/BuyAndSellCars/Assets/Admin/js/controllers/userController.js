@@ -113,6 +113,7 @@ var userController = {
         var address = $('#address').val();
         var mail = $('#mail').val();
         var type = userconfig.typeAccount;
+        var grpId = $('select#userGrpID').val();
         var user = {
             ID: id,
             UserName: userName,
@@ -122,6 +123,7 @@ var userController = {
             Phone: phone,
             Email: mail,
             Type: type,
+            GroupID: grpId,
         }
         $.ajax({
             url: '/User/CreateEditUser',
@@ -160,7 +162,7 @@ var userController = {
                 $('#phone').val(data.Phone);
                 $('#address').val(data.Address);
                 $('#mail').val(data.Email);
-                $('#membergrp').val(data.GroupID);
+                $('#userGrpID').val(data.GroupID);
             }
         })
     },

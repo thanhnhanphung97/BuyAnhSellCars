@@ -65,6 +65,7 @@ namespace Model.DAO
                 user.Email = entity.Email;
                 user.ModifiedDate = entity.ModifiedDate;
                 user.ModifiedBy = userName;
+                user.GroupID = entity.GroupID;
                 try
                 {
                     db.SaveChanges();
