@@ -18,3 +18,15 @@ D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\EntityFramework.SqlSe
 D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache
 D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.dll
 D:\Study\Git\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.pdb
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\Model.dll.config
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\Model.dll
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\Model.pdb
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\EntityFramework.dll
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\EntityFramework.SqlServer.dll
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\EntityFramework.xml
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\bin\Debug\EntityFramework.SqlServer.xml
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.csprojAssemblyReference.cache
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.csproj.CoreCompileInputs.cache
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.csproj.CopyComplete
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.dll
+D:\Working\Github\BuyAnhSellCars\BuyAndSellCars\Model\obj\Debug\Model.pdb
